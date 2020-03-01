@@ -1,0 +1,2 @@
+# reducesearchindex
+Reduce Search Index
