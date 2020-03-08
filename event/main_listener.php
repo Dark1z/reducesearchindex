@@ -103,7 +103,7 @@ class main_listener implements EventSubscriberInterface
 		{
 			$this->template->assign_vars(array(
 				'RSI_SEARCH_FLAG'		=> $this->config['dark1_rsi_enable'],
-				'RSI_SEARCH_TIME'		=> $this->user->create_datetime()->setTimestamp($this->config['dark1_rsi_time']),
+				'RSI_SEARCH_TIME'		=> $this->user->create_datetime()->setTimestamp((int) $this->config['dark1_rsi_time']),
 			));
 		}
 	}

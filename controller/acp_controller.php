@@ -103,7 +103,7 @@ class acp_controller
 	/**
 	 * Get Data form.
 	 *
-	 * @return void
+	 * @return array Having keys 'tpl_name' & 'page_title'
 	 */
 	public function get_data()
 	{
@@ -242,12 +242,27 @@ class acp_controller
 		}
 
 		// Set output variables for display in the template
+		$forum_rows = $this->print_forums();
+		foreach ($forum_rows as $key => $tpl_row)
+		{
+			$this->template->assign_block_vars('forumrow', $tpl_row);
+		}
+	}
+
+	/**
+	 * Display the Forum options.
+	 *
+	 * @return array
+	 */
+	private function print_forums()
+	{
 		$sql = 'SELECT forum_id, forum_type, forum_name, parent_id, left_id, right_id, dark1_rsi_f_enable FROM ' . FORUMS_TABLE . ' ORDER BY left_id ASC';
 		$result = $this->db->sql_query($sql);
 
 		$right = 0;
 		$padding_store = array('0' => '');
 		$padding = '';
+		$forum_rows = array();
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -269,7 +284,7 @@ class acp_controller
 					'S_IS_CAT'		=> true,
 					'FORUM_NAME'	=> $padding . '&nbsp; &#8627; &nbsp;' . $row['forum_name'],
 				);
-				$this->template->assign_block_vars('forumrow', $tpl_row);
+				$forum_rows[] = $tpl_row;
 			}
 			// Normal forums have a radio input with the value selected based on the value of the discord_notifications_enabled setting
 			else if ($row['forum_type'] == FORUM_POST)
@@ -281,11 +296,13 @@ class acp_controller
 					'FORUM_ID'		=> $row['forum_id'],
 					'ENABLE'		=> $row['dark1_rsi_f_enable'],
 				);
-				$this->template->assign_block_vars('forumrow', $tpl_row);
+				$forum_rows[] = $tpl_row;
 			}
 			// Other forum types (links) are ignored
 		}
 		$this->db->sql_freeresult($result);
+
+		return $forum_rows;
 	}
 
 	/**
@@ -315,7 +332,7 @@ class acp_controller
 
 			$cron_task = $this->cron_manager->find_task('dark1.reducesearchindex.cron.auto_reduce_sync');
 			$cron_task->run();
-			$this->template->assign_var('DONE_RUN_LS_CRON', true);
+			$this->template->assign_var('DONE_RUN_LS_CRON', (string) true);
 		}
 
 		// Set output variables for display in the template
