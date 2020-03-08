@@ -1,0 +1,67 @@
+{% include 'overall_header.html' %}
+
+{% INCLUDECSS '@dark1_reducesearchindex/dark1_rsi_acp_style.css' %}
+{% INCLUDECSS '@dark1_reducesearchindex/DateTimePicker/anytime.css' %}
+{% INCLUDEJS '@dark1_reducesearchindex/DateTimePicker/anytime.js' %}
+{% INCLUDEJS '@dark1_reducesearchindex/DateTimePicker/anytimetz.js' %}
+{% INCLUDEJS '@dark1_reducesearchindex/dark1_rsi_acp_script.js' %}
+
+<h1>{{ RSI_EXT_NAME }}</h1>
+<div>{{ lang('ACP_RSI_BY') }}&nbsp;{{ RSI_EXT_DEV }}</div>
+<hr class="acp-rsi-hr">
+<h2>{{ RSI_EXT_MODE }}</h2>
+
+<form id="dark1_reducesearchindex_acp" name="dark1_reducesearchindex_acp" method="post" action="{{ U_ACTION }}">
+
+	<fieldset>
+		<legend>{{ lang('ACP_RSI_SET') }}</legend>
+		<dl>
+			<dt>
+				<label for="dark1_rsi_enable">{{ lang('ACP_RSI_ENABLE') ~ lang('COLON') }}</label>
+				<br>
+				<div>{{ lang('ACP_RSI_ENABLE_EXPLAIN') }}</div>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="dark1_rsi_enable" value="1" {% if RSI_ENABLE %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="dark1_rsi_enable" value="0" {% if not RSI_ENABLE %}checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt>
+				<label for="dark1_rsi_time">{{ lang('ACP_RSI_TIME') ~ lang('COLON') }}</label>
+				<br>
+				<div>{{ lang('ACP_RSI_TIME_EXPLAIN') }}</div>
+			</dt>
+			<dd>
+				<input type="text" name="dark1_rsi_time" id="dark1_rsi_time" value="{{ RSI_TIME }}" size="45" maxlength="80" />
+			</dd>
+		</dl>
+		<dl>
+			<dt>
+				<label for="dark1_rsi_interval">{{ lang('ACP_RSI_INTERVAL') ~ lang('COLON') }}</label>
+				<br>
+				<div>{{ lang('ACP_RSI_INTERVAL_EXPLAIN') }}</div>
+			</dt>
+			<dd>
+				<input type="number" min="1" max="999" size="3" maxlength="3" step="1" name="dark1_rsi_interval" value="{{ RSI_INTERVAL }}" style="width: 50px;" /> {{ lang('ACP_RSI_DAYS') }}
+			</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+
+	<script>
+	//<![CDATA[
+		var TimeFormat = "%Y-%m-%d %h:%i:%s %p %:";
+		var mode = "{{ RSI_MODE }}";
+		var TimeLatest = "{{ RSI_CURR_TIME }}";
+	//]]>
+	</script>
+
+</form>
+
+{% include 'overall_footer.html' %}

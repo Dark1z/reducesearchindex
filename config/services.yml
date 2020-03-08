@@ -1,0 +1,34 @@
+services:
+    dark1.reducesearchindex.controller.acp:
+        class: dark1\reducesearchindex\controller\acp_controller
+        arguments:
+            - '@config'
+            - '@language'
+            - '@log'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@dbal.conn'
+            - '@cron.manager'
+
+    dark1.reducesearchindex.listener:
+        class: dark1\reducesearchindex\event\main_listener
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@template'
+            - '@user'
+        tags:
+            - { name: event.listener }
+
+    dark1.reducesearchindex.cron.auto_reduce_sync:
+        class: dark1\reducesearchindex\cron\auto_reduce_sync
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@log'
+            - '@service_container'
+        calls:
+            - [set_name, [dark1.reducesearchindex.cron.auto_reduce_sync]]
+        tags:
+            - { name: cron.task }
