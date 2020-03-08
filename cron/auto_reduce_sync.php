@@ -84,93 +84,24 @@ class auto_reduce_sync extends base
 		if ($this->config['dark1_rsi_enable'] && ($this->config['dark1_rsi_time'] < (time() - $this->config['dark1_rsi_interval'])))
 		{
 			$this->config->set('dark1_rsi_time', (time() - $this->config['dark1_rsi_interval']), false);
-			$post_ids = $poster_ids = $topic_ids = $forum_ids = array();
 
-			$sql = 'SELECT t.topic_id, p.post_id, p.poster_id, p.forum_id' . PHP_EOL .
-					'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
-					'LEFT JOIN ' . TOPICS_TABLE . ' as t' . PHP_EOL .
-					'ON t.topic_id = p.topic_id' . PHP_EOL .
-					'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
-					'ON f.forum_id = p.forum_id' . PHP_EOL .
-					'WHERE f.dark1_rsi_f_enable = 3 AND t.topic_time <= ' . (int) $this->config['dark1_rsi_time'];
-			$result = $this->db->sql_query($sql);
+			// Get Data
+			$topic_ary = $this->get_topic_ary();
+			$post_ary = $this->get_post_ary();
 
-			while ($row = $this->db->sql_fetchrow($result))
-			{
-				$post_ids[] = (int) $row['post_id'];
-				$poster_ids[] = (int) $row['poster_id'];
-				$topic_ids[] = (int) $row['topic_id'];
-				$forum_ids[] = (int) $row['forum_id'];
-			}
-			$this->db->sql_freeresult($result);
-
-			$sql = 'SELECT p.post_id, p.poster_id, p.forum_id' . PHP_EOL .
-					'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
-					'LEFT JOIN ' . TOPICS_TABLE . ' as t' . PHP_EOL .
-					'ON t.topic_id = p.topic_id' . PHP_EOL .
-					'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
-					'ON f.forum_id = p.forum_id' . PHP_EOL .
-					'WHERE f.dark1_rsi_f_enable = 2 AND t.topic_time <= ' . (int) $this->config['dark1_rsi_time'];
-			$result = $this->db->sql_query($sql);
-
-			while ($row = $this->db->sql_fetchrow($result))
-			{
-				$post_ids[] = (int) $row['post_id'];
-				$poster_ids[] = (int) $row['poster_id'];
-				$forum_ids[] = (int) $row['forum_id'];
-			}
-			$this->db->sql_freeresult($result);
-
-			$sql = 'SELECT p.post_id, p.poster_id, p.forum_id' . PHP_EOL .
-					'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
-					'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
-					'ON f.forum_id = p.forum_id' . PHP_EOL .
-					'WHERE f.dark1_rsi_f_enable = 1 AND p.post_time <= ' . (int) $this->config['dark1_rsi_time'];
-			$result = $this->db->sql_query($sql);
-
-			while ($row = $this->db->sql_fetchrow($result))
-			{
-				$post_ids[] = (int) $row['post_id'];
-				$poster_ids[] = (int) $row['poster_id'];
-				$forum_ids[] = (int) $row['forum_id'];
-			}
-			$this->db->sql_freeresult($result);
-
-			$post_ids = $this->array_unique_sort($post_ids);
-			$poster_ids = $this->array_unique_sort($poster_ids);
-			$topic_ids = $this->array_unique_sort($topic_ids);
-			$forum_ids = $this->array_unique_sort($forum_ids);
+			// Set Data
+			$post_ids = $this->array_unique_sort(array_merge($topic_ary['post_ids'], $post_ary['post_ids']));
+			$poster_ids = $this->array_unique_sort(array_merge($topic_ary['poster_ids'], $post_ary['poster_ids']));
+			$forum_ids = $this->array_unique_sort(array_merge($topic_ary['forum_ids'], $post_ary['forum_ids']));
 
 			// Lock Topics
-			if (count($topic_ids) > 0)
-			{
-				$sql = 'UPDATE ' . TOPICS_TABLE . PHP_EOL .
-						'SET topic_status = ' . ITEM_LOCKED  . PHP_EOL .
-						'WHERE ' . $this->db->sql_in_set('topic_id', $topic_ids);
-				$this->db->sql_query($sql);
-			}
+			$this->lock_topics($topic_ary['topic_ids']);
 
 			// Remove the message from the search index
-			$search_type = $this->config['search_type'];
-			$identifier = substr($search_type, strrpos($search_type, '\\') + 1);
-			if ($identifier == 'fulltext_native' && class_exists($search_type))
-			{
-				$error = false;
-				$phpbb_root_path = $this->phpbb_container->getParameter('core.root_path');
-				$phpEx = $this->phpbb_container->getParameter('core.php_ext');
-				$auth = $this->phpbb_container->get('auth');
-				$user = $this->phpbb_container->get('user');
-				$phpbb_dispatcher = $this->phpbb_container->get('dispatcher');
-
-				$search = new $search_type($error, $phpbb_root_path, $phpEx, $auth, $this->config, $this->db, $user, $phpbb_dispatcher);
-				if ($error == false)
-				{
-					@$search->index_remove($post_ids, $poster_ids, $forum_ids);
-				}
-			}
+			$this->reduce_search_index($post_ids, $poster_ids, $forum_ids);
 
 			$dark1_rsi_interval = $this->config['dark1_rsi_interval'] / 86400;
-			$dark1_rsi_time = date('Y-m-d h:i:s A P', $this->config['dark1_rsi_time']);
+			$dark1_rsi_time = date('Y-m-d h:i:s A P', (int) $this->config['dark1_rsi_time']);
 			$this->phpbb_log->add('admin', '', '', 'RSI_AUTO_LOG', time(), array($dark1_rsi_interval, $dark1_rsi_time));
 		}
 
@@ -190,6 +121,126 @@ class auto_reduce_sync extends base
 		$ary_ids = array_unique($ary_ids);
 		sort($ary_ids, SORT_NUMERIC);
 		return $ary_ids;
+	}
+
+	/**
+	* Get Topic Array.
+	*
+	* @return array
+	* @access private
+	*/
+	private function get_topic_ary()
+	{
+		$post_ids = $poster_ids = $forum_ids = $topic_ids = array();
+
+		$sql = 'SELECT t.topic_id, p.post_id, p.poster_id, p.forum_id, f.dark1_rsi_f_enable' . PHP_EOL .
+				'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
+				'LEFT JOIN ' . TOPICS_TABLE . ' as t' . PHP_EOL .
+				'ON t.topic_id = p.topic_id' . PHP_EOL .
+				'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
+				'ON f.forum_id = p.forum_id' . PHP_EOL .
+				'WHERE f.dark1_rsi_f_enable >= 2 AND t.topic_time <= ' . (int) $this->config['dark1_rsi_time'];
+		$result = $this->db->sql_query($sql);
+
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$post_ids[] = (int) $row['post_id'];
+			$poster_ids[] = (int) $row['poster_id'];
+			$forum_ids[] = (int) $row['forum_id'];
+
+			if ($row['dark1_rsi_f_enable'] == 3)
+			{
+				$topic_ids[] = (int) $row['topic_id'];
+			}
+		}
+		$this->db->sql_freeresult($result);
+
+		return array(
+			'post_ids' => $post_ids,
+			'poster_ids' => $poster_ids,
+			'forum_ids' => $forum_ids,
+			'topic_ids' => $topic_ids,
+		);
+	}
+
+	/**
+	* Get Post Array.
+	*
+	* @return array
+	* @access private
+	*/
+	private function get_post_ary()
+	{
+		$post_ids = $poster_ids = $forum_ids = array();
+
+		$sql = 'SELECT p.post_id, p.poster_id, p.forum_id' . PHP_EOL .
+				'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
+				'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
+				'ON f.forum_id = p.forum_id' . PHP_EOL .
+				'WHERE f.dark1_rsi_f_enable = 1 AND p.post_time <= ' . (int) $this->config['dark1_rsi_time'];
+		$result = $this->db->sql_query($sql);
+
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$post_ids[] = (int) $row['post_id'];
+			$poster_ids[] = (int) $row['poster_id'];
+			$forum_ids[] = (int) $row['forum_id'];
+		}
+		$this->db->sql_freeresult($result);
+
+		return array(
+			'post_ids' => $post_ids,
+			'poster_ids' => $poster_ids,
+			'forum_ids' => $forum_ids,
+		);
+	}
+
+	/**
+	* Lock Topics using Topic IDs.
+	*
+	* @param array		$topic_ids		Array with Topic IDs
+	* @return void
+	* @access private
+	*/
+	private function lock_topics($topic_ids)
+	{
+		if (count($topic_ids) > 0)
+		{
+			$sql = 'UPDATE ' . TOPICS_TABLE . PHP_EOL .
+					'SET topic_status = ' . ITEM_LOCKED  . PHP_EOL .
+					'WHERE ' . $this->db->sql_in_set('topic_id', $topic_ids);
+			$this->db->sql_query($sql);
+		}
+	}
+
+	/**
+	* Reduce Search Index using Post & Poster & Forum IDs.
+	*
+	* @param array		$post_ids		Array with Post IDs
+	* @param array		$poster_ids		Array with Poster IDs
+	* @param array		$forum_ids		Array with Forum IDs
+	* @return void
+	* @access private
+	*/
+	private function reduce_search_index($post_ids, $poster_ids, $forum_ids)
+	{
+		$search_type = $this->config['search_type'];
+		$identifier = substr($search_type, strrpos($search_type, '\\') + 1);
+		if ($identifier == 'fulltext_native' && class_exists($search_type))
+		{
+			$error = false;
+			$phpbb_root_path = $this->phpbb_container->getParameter('core.root_path');
+			$phpEx = $this->phpbb_container->getParameter('core.php_ext');
+			$auth = $this->phpbb_container->get('auth');
+			$user = $this->phpbb_container->get('user');
+			$phpbb_dispatcher = $this->phpbb_container->get('dispatcher');
+
+			$search = new $search_type($error, $phpbb_root_path, $phpEx, $auth, $this->config, $this->db, $user, $phpbb_dispatcher);
+			if ($error === false)
+			{
+				@$search->index_remove($post_ids, $poster_ids, $forum_ids);
+			}
+		}
 	}
 
 }
