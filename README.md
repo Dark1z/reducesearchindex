@@ -16,9 +16,9 @@ This Extension Lets Admin to control Search Index .  😉
 2. Option to set the Time from which Search Index is Kept, Also Time before which Search Index is Deleted.   
 3. Option to set Interval to Update the above Time when Cron is run.   
 4. Option to `Topic + Lock` / `Topic Only` / `Post Only` / `Disable` for each Forum.   
-    - `Topic + Lock` : Search Index from the Forum for the Topic is Deleted and Locked as per the above Time.
-    - `Topic Only` : Search Index from the Forum for the Topic is Deleted as per the above Time.
-    - `Post Only` : Search Index from the Forum for the Post is Deleted as per the above Time.
+    - `Topic + Lock` : Search Index from the Forum for the Topic is Deleted and Locked as per the above Time.   
+    - `Topic Only` : Search Index from the Forum for the Topic is Deleted as per the above Time.   
+    - `Post Only` : Search Index from the Forum for the Post is Deleted as per the above Time.   
 5. Option to Enable/Disable the Cron task to Reduce Search Index.   
 6. Option to set Interval for Cron task.   
 7. Option to set the Last Run Time for Cron task.   
@@ -28,7 +28,11 @@ This Extension Lets Admin to control Search Index .  😉
    
 ## **Notes :**   
    
-1. Option to Run the Cron task.   
+1. **phpBB Native Fulltext** `fulltext_native` : This is Fully Supported.   
+2. **MySQL Fulltext** `fulltext_mysql` : This can not be Supported due fully DataBase side implementation & management.   
+3. **PostgreSQL Fulltext** `fulltext_postgres` : This can not be Supported due fully DataBase side implementation & management.   
+4. **Sphinx Fulltext** `fulltext_sphinx` : This is not currently Supported because I myself do not know if it's supported or not,
+also if it's supported then *"how to ???"* , If somebody is able to help me with this then I'll be very happy, credits for the same will be given.   
    
    
 ## For More Detail's & ScreenShot's : [GitHub Page](https://dark-1.github.io/reducesearchindex/)
