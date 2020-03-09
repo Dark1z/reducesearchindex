@@ -73,6 +73,7 @@
 .AnyTime-pkr *
   {
   text-align:center;
+  z-index: 999;
   }
 
 /*  .AnyTime-cloak covers an AnyTime-pkr whenever an AnyTime-yr-selector

@@ -35,7 +35,7 @@ This Extension Lets Admin to control Search Index .  😉
 also if it's supported then *"how to ???"* , If somebody is able to help me with this then I'll be very happy, credits for the same will be given.   
    
    
-## For More Detail's & ScreenShot's : [GitHub Page](https://dark-1.github.io/reducesearchindex/)
+## For More Detail's & ScreenShot's : [GitHub Page](https://dark-1.github.io/reducesearchindex/)   
    
    
 ## **Installation :**   
@@ -81,7 +81,7 @@ GitHub Repository: [reducesearchindex](https://github.com/dark-1/reducesearchind
 phpBB Customisation Database Extension: [Reduce Search Index](https://www.phpbb.com/customise/db/extension/reduce_search_index)   
 For more Details Go Here : [Reduce Search Index [RSI]](https://dark-1.github.io/reducesearchindex)   
    
-## License  [GPLv2](license.txt)
+## License  [GPLv2](license.txt)   
    
 --------------   
 EnJoY  😃   
