@@ -77,11 +77,18 @@ Detailed phpBB standard Updation of Extensions here : [phpBB Extensions Updating
 Detailed phpBB standard Uninstallation of Extensions here : [phpBB Extensions Removing](https://www.phpbb.com/extensions/installing/#removing)   
    
    
-GitHub Repository: [reducesearchindex](https://github.com/dark-1/reducesearchindex)   
-phpBB Customisation Database Extension: [Reduce Search Index](https://www.phpbb.com/customise/db/extension/reduce_search_index)   
-For more Details Go Here : [Reduce Search Index [RSI]](https://dark-1.github.io/reducesearchindex)   
+## **Links :**   
    
-## License  [GPLv2](license.txt)   
+**GitHub Repository** : [reducesearchindex](https://github.com/dark-1/reducesearchindex)   
+**phpBB Customisation Database Extension** : [Reduce Search Index](https://www.phpbb.com/customise/db/extension/reduce_search_index)   
+**For more Details Go Here** : [Reduce Search Index [RSI]](https://dark-1.github.io/reducesearchindex)   
+   
+**Credit where credit's due** :   
+Date & Time Picker : **Any+Time** by *Andrew M. Andrews III* at [ama3.com/anytime](https://www.ama3.com/anytime),   
+which can be found at `dark1/reducesearchindex/styles/all/template/DateTimePicker`   
+   
+   
+## License [GPLv2](license.txt)   
    
 --------------   
 EnJoY  😃   

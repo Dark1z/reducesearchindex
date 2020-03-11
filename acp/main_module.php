@@ -30,22 +30,36 @@ class main_module
 	{
 		global $phpbb_container;
 
-		/** @var \dark1\reducesearchindex\controller\acp_controller $acp_controller */
-		$acp_controller = $phpbb_container->get('dark1.reducesearchindex.controller.acp');
+		// Normalize the Mode to Lowercase
+		$mode = strtolower($mode);
 
-		// Load the display handle in our ACP controller
-		$acp_controller->set_data($id, $mode, $this->u_action);
+		// check for valid Mode
+		if (class_exists('dark1\reducesearchindex\controller\acp_' . $mode))
+		{
+			// Get ACP controller for Mode
+			$acp_controller = $phpbb_container->get('dark1.reducesearchindex.controller.acp.' . $mode);
 
-		// Get data from our ACP controller
-		$acp_get_data = $acp_controller->get_data();
+			// Load the display handle in our ACP controller
+			$acp_controller->set_data($id, $mode, $this->u_action);
 
-		// Load a template from adm/style for our ACP page
-		$this->tpl_name = $acp_get_data['tpl_name'];
+			// Get data from our ACP controller
+			$acp_get_data = $acp_controller->get_data();
 
-		// Set the page title for our ACP page
-		$this->page_title = $acp_get_data['page_title'];
+			// Load a template from adm/style for our ACP page
+			$this->tpl_name = $acp_get_data['tpl_name'];
 
-		// Load the display handle in our ACP controller
-		$acp_controller->display();
+			// Set the page title for our ACP page
+			$this->page_title = $acp_get_data['page_title'];
+
+			// Load the setup in our ACP controller
+			$acp_controller->setup();
+
+			// Load the handle in our ACP controller
+			$acp_controller->handle();
+		}
+		else
+		{
+			trigger_error('FORM_INVALID', E_USER_WARNING);
+		}
 	}
 }

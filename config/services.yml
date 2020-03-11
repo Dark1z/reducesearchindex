@@ -1,14 +1,33 @@
 services:
-    dark1.reducesearchindex.controller.acp:
-        class: dark1\reducesearchindex\controller\acp_controller
+    dark1.reducesearchindex.controller.acp.main:
+        class: dark1\reducesearchindex\controller\acp_main
         arguments:
+            - '@language'
+            - '@log'
+            - '@request'
+            - '@template'
+            - '@user'
             - '@config'
+
+    dark1.reducesearchindex.controller.acp.forum:
+        class: dark1\reducesearchindex\controller\acp_forum
+        arguments:
             - '@language'
             - '@log'
             - '@request'
             - '@template'
             - '@user'
             - '@dbal.conn'
+
+    dark1.reducesearchindex.controller.acp.cron:
+        class: dark1\reducesearchindex\controller\acp_cron
+        arguments:
+            - '@language'
+            - '@log'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@config'
             - '@cron.manager'
 
     dark1.reducesearchindex.listener:

@@ -79,5 +79,4 @@ $lang = array_merge($lang, array(
 	'ACP_RSI_CRON_NEXT_RUN'			=> 'Auto Reduce Sync Next Run',
 	'ACP_RSI_CRON_RUN'				=> 'Run Auto Reduce Sync',
 	'ACP_RSI_CRON_RUN_NOW'			=> 'Run Now',
-	'ACP_RSI_CRON_RUN_DONE'			=> 'Done',
 ));
