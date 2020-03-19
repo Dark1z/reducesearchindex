@@ -13,12 +13,12 @@ namespace dark1\reducesearchindex\controller;
 /**
  * @ignore
  */
-use phpbb\config\config;
-use phpbb\template\template;
-use phpbb\user;
 use phpbb\language\language;
 use phpbb\log\log;
 use phpbb\request\request;
+use phpbb\template\template;
+use phpbb\user;
+use phpbb\config\config;
 use phpbb\cron\manager as cron_manager;
 
 /**

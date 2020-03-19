@@ -13,11 +13,11 @@ namespace dark1\reducesearchindex\controller;
 /**
  * @ignore
  */
-use phpbb\template\template;
-use phpbb\user;
 use phpbb\language\language;
 use phpbb\log\log;
 use phpbb\request\request;
+use phpbb\template\template;
+use phpbb\user;
 
 /**
  * Reduce Search Index [RSI] ACP controller Base.

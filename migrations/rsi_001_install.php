@@ -17,7 +17,7 @@ class rsi_001_install extends migration
 
 	static public function depends_on()
 	{
-		return array( '\dark1\reducesearchindex\migrations\rsi_000_main');
+		return array('\dark1\reducesearchindex\migrations\rsi_000_main');
 	}
 
 	public function update_schema()

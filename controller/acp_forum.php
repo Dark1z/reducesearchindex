@@ -13,12 +13,12 @@ namespace dark1\reducesearchindex\controller;
 /**
  * @ignore
  */
-use phpbb\db\driver\driver_interface;
-use phpbb\template\template;
-use phpbb\user;
 use phpbb\language\language;
 use phpbb\log\log;
 use phpbb\request\request;
+use phpbb\template\template;
+use phpbb\user;
+use phpbb\db\driver\driver_interface;
 
 /**
  * Reduce Search Index [RSI] ACP controller Forum.
@@ -72,15 +72,23 @@ class acp_forum extends acp_base
 	 */
 	private function print_forums()
 	{
+		$forums = [];
 		$sql = 'SELECT forum_id, forum_type, forum_name, parent_id, left_id, right_id, dark1_rsi_f_enable FROM ' . FORUMS_TABLE . ' ORDER BY left_id ASC';
 		$result = $this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$forums[] = $row;
+		}
+		$this->db->sql_freeresult($result);
 
 		$right = 0;
 		$padding_store = array('0' => '');
 		$padding = '';
 
-		while ($row = $this->db->sql_fetchrow($result))
+		foreach ($forums as $row)
 		{
+			$tpl_row = [];
+
 			if ($row['left_id'] < $right)
 			{
 				$padding .= '&nbsp; &nbsp; &nbsp;';
@@ -95,27 +103,29 @@ class acp_forum extends acp_base
 			// Category forums are displayed for organizational purposes, but have no configuration
 			if ($row['forum_type'] == FORUM_CAT)
 			{
-				$tpl_row = array(
+				$tpl_row = [
 					'S_IS_CAT'		=> true,
 					'FORUM_NAME'	=> $padding . '&nbsp; &#8627; &nbsp;' . $row['forum_name'],
-				);
-				$this->template->assign_block_vars('forumrow', $tpl_row);
+				];
 			}
 			// Normal forums have a radio input with the value selected based on the value of the setting
 			else if ($row['forum_type'] == FORUM_POST)
 			{
 				// The labels for all the inputs are constructed based on the forum IDs to make it easy to know which
-				$tpl_row = array(
+				$tpl_row = [
 					'S_IS_CAT'		=> false,
 					'FORUM_NAME'	=> $padding . '&nbsp; &#8627; &nbsp;' . $row['forum_name'],
 					'FORUM_ID'		=> $row['forum_id'],
 					'ENABLE'		=> $row['dark1_rsi_f_enable'],
-				);
-				$this->template->assign_block_vars('forumrow', $tpl_row);
+				];
 			}
 			// Other forum types (links) are ignored
+
+			if (!empty($tpl_row))
+			{
+				$this->template->assign_block_vars('forumrow', $tpl_row);
+			}
 		}
-		$this->db->sql_freeresult($result);
 	}
 
 	/**

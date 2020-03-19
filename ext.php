@@ -21,15 +21,32 @@ use phpbb\extension\base;
 class ext extends base
 {
 	/** string Require phpBB v3.2.9 due to various reasons. */
-	const RSI_PHPBB_MIN_VERSION = '3.2.9';
+	const PHPBB_32x_MIN_VERSION = '3.2.9';
+
+	/** string Require phpBB v3.3.0 due to various reasons. */
+	const PHPBB_33x_MIN_VERSION = '3.3.0';
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function is_enableable()
 	{
-		$config = $this->container->get('config');
-		return phpbb_version_compare($config['version'], self::RSI_PHPBB_MIN_VERSION, '>=') && phpbb_version_compare(PHPBB_VERSION, self::RSI_PHPBB_MIN_VERSION, '>=');
+		return $this->pbpbb_ver_chk();
 	}
 
+	/**
+	 * phpBB Version Check.
+	 *
+	 * @return bool
+	 */
+	private function pbpbb_ver_chk()
+	{
+		$config = $this->container->get('config');
+
+		$phpbb_version = phpbb_version_compare(PHPBB_VERSION, $config['version'], '>=') ? PHPBB_VERSION : $config['version'] ;
+		list($v1, $v2) = explode('.', $phpbb_version);
+		$phpbb_min_version = 'self::PHPBB_' . $v1 . $v2 . 'x_MIN_VERSION';
+
+		return defined($phpbb_min_version) ? phpbb_version_compare($phpbb_version, constant($phpbb_min_version), '>=') : false ;
+	}
 }
