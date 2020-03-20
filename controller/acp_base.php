@@ -74,6 +74,7 @@ class acp_base
 	 * @param string	$u_action	Custom form action
 	 *
 	 * @return void
+	 * @access public
 	 */
 	public function set_data($id, $mode, $u_action)
 	{
@@ -86,6 +87,7 @@ class acp_base
 	 * Get Data form.
 	 *
 	 * @return array Having keys 'tpl_name' & 'page_title'
+	 * @access public
 	 */
 	public function get_data()
 	{
@@ -99,6 +101,7 @@ class acp_base
 	 * Set Display form.
 	 *
 	 * @return void
+	 * @access public
 	 */
 	public function setup()
 	{
@@ -125,6 +128,7 @@ class acp_base
 	 * Check Form On Submit .
 	 *
 	 * @return void
+	 * @access protected
 	 */
 	protected function check_form_on_submit()
 	{
@@ -140,6 +144,7 @@ class acp_base
 	 * Used to Log & Trigger Success Err0r.
 	 *
 	 * @return void
+	 * @access protected
 	 */
 	protected function success_form_on_submit()
 	{

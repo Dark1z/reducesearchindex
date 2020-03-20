@@ -49,6 +49,7 @@ class acp_main extends acp_base
 	 * Display the options a user can configure for Main Mode.
 	 *
 	 * @return void
+	 * @access public
 	 */
 	public function handle()
 	{

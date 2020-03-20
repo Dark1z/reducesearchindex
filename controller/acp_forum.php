@@ -50,6 +50,7 @@ class acp_forum extends acp_base
 	 * Display the options a user can configure for Forum Mode.
 	 *
 	 * @return void
+	 * @access public
 	 */
 	public function handle()
 	{
@@ -69,6 +70,7 @@ class acp_forum extends acp_base
 	 * Display the Forum options.
 	 *
 	 * @return void
+	 * @access private
 	 */
 	private function print_forums()
 	{
@@ -132,6 +134,7 @@ class acp_forum extends acp_base
 	 * Submit the Forum options.
 	 *
 	 * @return void
+	 * @access private
 	 */
 	private function submit_forums()
 	{

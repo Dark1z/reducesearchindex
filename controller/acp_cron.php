@@ -55,6 +55,7 @@ class acp_cron extends acp_base
 	 * Display the options a user can configure for Cron Mode.
 	 *
 	 * @return void
+	 * @access public
 	 */
 	public function handle()
 	{

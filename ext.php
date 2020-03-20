@@ -21,10 +21,10 @@ use phpbb\extension\base;
 class ext extends base
 {
 	/** string Require phpBB v3.2.9 due to various reasons. */
-	const PHPBB_32x_MIN_VERSION = '3.2.9';
+	const PHPBB_MIN_3_2_X = '3.2.9';
 
 	/** string Require phpBB v3.3.0 due to various reasons. */
-	const PHPBB_33x_MIN_VERSION = '3.3.0';
+	const PHPBB_MIN_3_3_X = '3.3.0';
 
 	/**
 	 * {@inheritdoc}
@@ -38,6 +38,7 @@ class ext extends base
 	 * phpBB Version Check.
 	 *
 	 * @return bool
+	 * @access private
 	 */
 	private function pbpbb_ver_chk()
 	{
@@ -45,7 +46,7 @@ class ext extends base
 
 		$phpbb_version = phpbb_version_compare(PHPBB_VERSION, $config['version'], '>=') ? PHPBB_VERSION : $config['version'] ;
 		list($v1, $v2) = explode('.', $phpbb_version);
-		$phpbb_min_version = 'self::PHPBB_' . $v1 . $v2 . 'x_MIN_VERSION';
+		$phpbb_min_version = 'self::PHPBB_MIN_' . $v1 . '_' . $v2 . '_X';
 
 		return defined($phpbb_min_version) ? phpbb_version_compare($phpbb_version, constant($phpbb_min_version), '>=') : false ;
 	}

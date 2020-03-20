@@ -63,7 +63,8 @@ $lang = array_merge($lang, array(
 
 	// Forum
 	'ACP_RSI_FORUM_EXPLAIN'			=> 'Select the Option to Enable Reduce Search Index for each Forum.<br>Need to select at-least one Forum.<br>Following are Options',
-	'ACP_RSI_TABLE_FORUM'			=> 'Forum Name',
+	'ACP_RSI_TABLE_FORUM_NAME'		=> 'Forum Name',
+	'ACP_RSI_TABLE_FORUM_OPTION'	=> 'Forum Options',
 	'ACP_RSI_TABLE_LOCK'			=> 'Topic + Lock',
 	'ACP_RSI_TABLE_LOCK_EXPLAIN'	=> 'Search Index from the Forum for the Topic is Deleted and Locked as per the “Reduce Time”.',
 	'ACP_RSI_TABLE_TOPIC'			=> 'Topic Only',

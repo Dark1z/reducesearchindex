@@ -23,11 +23,8 @@
 		<table class="table1 responsive">
 			<thead>
 				<tr>
-					<th>{{ lang('ACP_RSI_TABLE_FORUM') }}</th>
-					<th>{{ lang('ACP_RSI_TABLE_LOCK') }}</th>
-					<th>{{ lang('ACP_RSI_TABLE_TOPIC') }}</th>
-					<th>{{ lang('ACP_RSI_TABLE_POST') }}</th>
-					<th>{{ lang('ACP_RSI_TABLE_DISABLE') }}</th>
+					<th>{{ lang('ACP_RSI_TABLE_FORUM_NAME') }}</th>
+					<th colspan="4">{{ lang('ACP_RSI_TABLE_FORUM_OPTION') }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,16 +40,16 @@
 									{{ forumrow.FORUM_NAME }}
 								</td>
 								<td class="col1">
-									<input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="3" {% if forumrow.ENABLE == 3 %}checked="checked"{% endif %}/>
+									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="3" {% if forumrow.ENABLE == 3 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_LOCK') }}</label>
 								</td>
 								<td class="col1">
-									<input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="2" {% if forumrow.ENABLE == 2 %}checked="checked"{% endif %}/>
+									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="2" {% if forumrow.ENABLE == 2 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_TOPIC') }}</label>
 								</td>
 								<td class="col1">
-									<input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="1" {% if forumrow.ENABLE == 1 %}checked="checked"{% endif %}/>
+									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="1" {% if forumrow.ENABLE == 1 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_POST') }}</label>
 								</td>
 								<td class="col1">
-									<input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="0" {% if forumrow.ENABLE == 0 %}checked="checked"{% endif %}/>
+									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="0" {% if forumrow.ENABLE == 0 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_DISABLE') }}</label>
 								</td>
 							</tr>
 						{% endif %}
