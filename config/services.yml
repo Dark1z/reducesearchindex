@@ -19,6 +19,7 @@ services:
             - '@template'
             - '@user'
             - '@dbal.conn'
+            - '@cache.driver'
 
     dark1.reducesearchindex.controller.acp.cron:
         class: dark1\reducesearchindex\controller\acp_cron
@@ -36,6 +37,7 @@ services:
         arguments:
             - '@config'
             - '@dbal.conn'
+            - '@cache.driver'
             - '@template'
             - '@user'
         tags:

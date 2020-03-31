@@ -15,7 +15,8 @@ namespace dark1\reducesearchindex\event;
  */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use phpbb\config\config;
-use phpbb\db\driver\driver_interface;
+use phpbb\db\driver\driver_interface as db_driver;
+use phpbb\cache\driver\driver_interface as cache_driver;
 use phpbb\template\template;
 use phpbb\user;
 
@@ -30,6 +31,9 @@ class main_listener implements EventSubscriberInterface
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
 
+	/** @var \phpbb\cache\driver\driver_interface */
+	protected $cache;
+
 	/** @var \phpbb\template\template */
 	protected $template;
 
@@ -39,18 +43,20 @@ class main_listener implements EventSubscriberInterface
 	/**
 	 * Constructor for listener
 	 *
-	 * @param \phpbb\config\config				$config		phpBB config
-	 * @param \phpbb\db\driver\driver_interface	$db			phpBB DBAL object
-	 * @param \phpbb\template\template			$template	phpBB template
-	 * @param \phpbb\user						$user		phpBB user
+	 * @param \phpbb\config\config					$config		phpBB config
+	 * @param \phpbb\db\driver\driver_interface		$db			phpBB DBAL object
+	 * @param \phpbb\cache\driver\driver_interface	$cache		phpBB Cache object
+	 * @param \phpbb\template\template				$template	phpBB template
+	 * @param \phpbb\user							$user		phpBB user
 	 * @access public
 	 */
-	public function __construct(config $config, driver_interface $db, template $template, user $user)
+	public function __construct(config $config, db_driver $db, cache_driver $cache, template $template, user $user)
 	{
-		$this->config				= $config;
-		$this->db					= $db;
-		$this->template				= $template;
-		$this->user					= $user;
+		$this->config		= $config;
+		$this->db			= $db;
+		$this->cache		= $cache;
+		$this->template		= $template;
+		$this->user			= $user;
 	}
 
 	/**
@@ -150,17 +156,31 @@ class main_listener implements EventSubscriberInterface
 	 */
 	private function get_search_forum($post_id)
 	{
-		$sql = 'SELECT f.dark1_rsi_f_enable, t.topic_time, p.post_time' . PHP_EOL .
-				'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
-				'LEFT JOIN ' . TOPICS_TABLE . ' as t' . PHP_EOL .
-				'ON t.topic_id = p.topic_id' . PHP_EOL .
-				'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
-				'ON f.forum_id = p.forum_id' . PHP_EOL .
-				'WHERE p.post_id = ' . (int) $post_id;
-		$result = $this->db->sql_query($sql);
-		$forum = $this->db->sql_fetchrow($result);
-		$this->db->sql_freeresult($result);
+		$cache_key = '_dark1_rsi_search_matrix';
 
-		return $forum;
+		// Get search matrix data from the cache
+		$search_matrix = $this->cache->get($cache_key);
+
+		if ($search_matrix === false || !isset($search_matrix[$post_id]))
+		{
+			$sql = 'SELECT f.dark1_rsi_f_enable, t.topic_time, p.post_time' . PHP_EOL .
+					'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
+					'LEFT JOIN ' . TOPICS_TABLE . ' as t' . PHP_EOL .
+					'ON t.topic_id = p.topic_id' . PHP_EOL .
+					'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
+					'ON f.forum_id = p.forum_id' . PHP_EOL .
+					'WHERE p.post_id = ' . (int) $post_id;
+			$result = $this->db->sql_query($sql);
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$search_matrix[$post_id] = $row;
+			}
+			$this->db->sql_freeresult($result);
+
+			// Cache post matrix data
+			$this->cache->put($cache_key, $search_matrix);
+		}
+
+		return $search_matrix[$post_id];
 	}
 }

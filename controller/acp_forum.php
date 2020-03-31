@@ -18,7 +18,8 @@ use phpbb\log\log;
 use phpbb\request\request;
 use phpbb\template\template;
 use phpbb\user;
-use phpbb\db\driver\driver_interface;
+use phpbb\db\driver\driver_interface as db_driver;
+use phpbb\cache\driver\driver_interface as cache_driver;
 
 /**
  * Reduce Search Index [RSI] ACP controller Forum.
@@ -27,6 +28,9 @@ class acp_forum extends acp_base
 {
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
+
+	/** @var \phpbb\cache\driver\driver_interface */
+	protected $cache;
 
 	/**
 	 * Constructor.
@@ -38,12 +42,14 @@ class acp_forum extends acp_base
 	 * @param \phpbb\template\template				$template		Template object
 	 * @param \phpbb\user							$user			User object
 	 * @param \phpbb\db\driver\driver_interface		$db				Database object
+	 * @param \phpbb\cache\driver\driver_interface	$cache			Cache object
 	 */
-	public function __construct(language $language, log $log, request $request, template $template, user $user, driver_interface $db)
+	public function __construct(language $language, log $log, request $request, template $template, user $user, db_driver $db, cache_driver $cache)
 	{
 		parent::__construct($language, $log, $request, $template, $user);
 
-		$this->db	= $db;
+		$this->db		= $db;
+		$this->cache	= $cache;
 	}
 
 	/**
@@ -155,5 +161,7 @@ class acp_forum extends acp_base
 			$sql = 'UPDATE ' . FORUMS_TABLE . ' SET dark1_rsi_f_enable = ' . (int) $input . ' WHERE forum_id = ' . (int) $id;
 			$this->db->sql_query($sql);
 		}
+
+		$this->cache->destroy('_dark1_rsi_search_matrix');
 	}
 }
