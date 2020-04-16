@@ -32,13 +32,11 @@
 					{% for forumrow in loops.forumrow %}
 						{% if forumrow.S_IS_CAT %}
 							<tr>
-								<td class="col1" colspan="5">{{ forumrow.FORUM_NAME }}</td>
+								<td class="col1" colspan="5"><span class="responsive-hide">{{ forumrow.FORUM_PAD }}</span>{{ forumrow.FORUM_NAME }}</td>
 							</tr>
 						{% else %}
 							<tr>
-								<td class="col1">
-									{{ forumrow.FORUM_NAME }}
-								</td>
+								<td class="col1"><span class="responsive-hide">{{ forumrow.FORUM_PAD }}</span>{{ forumrow.FORUM_NAME }}</td>
 								<td class="col1">
 									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="3" {% if forumrow.ENABLE == 3 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_LOCK') }}</label>
 								</td>

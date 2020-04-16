@@ -113,7 +113,8 @@ class acp_forum extends acp_base
 			{
 				$tpl_row = [
 					'S_IS_CAT'		=> true,
-					'FORUM_NAME'	=> $padding . '&nbsp; &#8627; &nbsp;' . $row['forum_name'],
+					'FORUM_PAD'		=> $padding . '&nbsp; &#8627; &nbsp;',
+					'FORUM_NAME'	=> $row['forum_name'],
 				];
 			}
 			// Normal forums have a radio input with the value selected based on the value of the setting
@@ -122,7 +123,8 @@ class acp_forum extends acp_base
 				// The labels for all the inputs are constructed based on the forum IDs to make it easy to know which
 				$tpl_row = [
 					'S_IS_CAT'		=> false,
-					'FORUM_NAME'	=> $padding . '&nbsp; &#8627; &nbsp;' . $row['forum_name'],
+					'FORUM_PAD'		=> $padding . '&nbsp; &#8627; &nbsp;',
+					'FORUM_NAME'	=> $row['forum_name'],
 					'FORUM_ID'		=> $row['forum_id'],
 					'ENABLE'		=> $row['dark1_rsi_f_enable'],
 				];
