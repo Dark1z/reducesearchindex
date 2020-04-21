@@ -147,20 +147,10 @@ class acp_forum extends acp_base
 	private function submit_forums()
 	{
 		// Set the options the user configured
-		$sql = 'SELECT forum_id, forum_type FROM ' . FORUMS_TABLE . ' ORDER BY left_id ASC';
-		$result = $this->db->sql_query($sql);
-		$forum_id_set = array();
-		while ($row = $this->db->sql_fetchrow($result))
+		$forum_enable = $this->request->variable('forum_enable', [0 => 0]);
+		foreach ($forum_enable as $forum_id => $enable)
 		{
-			if ($row['forum_type'] == FORUM_POST)
-			{
-				$forum_id_set[$row['forum_id']] =  $this->request->variable('forum_' . $row['forum_id'] . '_enable', 0);
-			}
-		}
-		$this->db->sql_freeresult($result);
-		foreach ($forum_id_set as $id => $input)
-		{
-			$sql = 'UPDATE ' . FORUMS_TABLE . ' SET dark1_rsi_f_enable = ' . (int) $input . ' WHERE forum_id = ' . (int) $id;
+			$sql = 'UPDATE ' . FORUMS_TABLE . ' SET dark1_rsi_f_enable = ' . (int) $enable . ' WHERE forum_id = ' . (int) $forum_id;
 			$this->db->sql_query($sql);
 		}
 

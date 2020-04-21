@@ -32,27 +32,31 @@
 					{% for forumrow in loops.forumrow %}
 						{% if forumrow.S_IS_CAT %}
 							<tr>
-								<td class="col1" colspan="5"><span class="responsive-hide">{{ forumrow.FORUM_PAD }}</span>{{ forumrow.FORUM_NAME }}</td>
+								<td class="row3" colspan="5"><span class="responsive-hide">{{ forumrow.FORUM_PAD }}</span>{{ forumrow.FORUM_NAME }}</td>
 							</tr>
 						{% else %}
 							<tr>
 								<td class="col1"><span class="responsive-hide">{{ forumrow.FORUM_PAD }}</span>{{ forumrow.FORUM_NAME }}</td>
 								<td class="col1">
-									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="3" {% if forumrow.ENABLE == 3 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_LOCK') }}</label>
+									<label><input type="radio" class="radio" name="forum_enable[{{ forumrow.FORUM_ID }}]" value="3" {% if forumrow.ENABLE == 3 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_LOCK') }}</label>
 								</td>
 								<td class="col1">
-									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="2" {% if forumrow.ENABLE == 2 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_TOPIC') }}</label>
+									<label><input type="radio" class="radio" name="forum_enable[{{ forumrow.FORUM_ID }}]" value="2" {% if forumrow.ENABLE == 2 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_TOPIC') }}</label>
 								</td>
 								<td class="col1">
-									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="1" {% if forumrow.ENABLE == 1 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_POST') }}</label>
+									<label><input type="radio" class="radio" name="forum_enable[{{ forumrow.FORUM_ID }}]" value="1" {% if forumrow.ENABLE == 1 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_POST') }}</label>
 								</td>
 								<td class="col1">
-									<label><input type="radio" class="radio" name="forum_{{ forumrow.FORUM_ID }}_enable" value="0" {% if forumrow.ENABLE == 0 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_DISABLE') }}</label>
+									<label><input type="radio" class="radio" name="forum_enable[{{ forumrow.FORUM_ID }}]" value="0" {% if forumrow.ENABLE == 0 %}checked="checked"{% endif %}/> {{ lang('ACP_RSI_TABLE_DISABLE') }}</label>
 								</td>
 							</tr>
 						{% endif %}
 					{% else %}
-					<strong>{{ lang('NO_FORUMS') }}</strong>
+							<tr>
+								<td class="row3" style="text-align: center;" colspan="5">
+									<strong>{{ lang('NO_FORUMS') }}</strong>
+								</td>
+							</tr>
 					{% endfor %}
 				{% endif %}
 			</tbody>
