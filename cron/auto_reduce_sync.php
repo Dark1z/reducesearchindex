@@ -14,10 +14,13 @@ namespace dark1\reducesearchindex\cron;
  * @ignore
  */
 use phpbb\cron\task\base;
+use dark1\reducesearchindex\core\consts;
 use phpbb\config\config;
 use phpbb\db\driver\driver_interface;
 use phpbb\log\log;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use phpbb\auth\auth;
+use phpbb\user;
+use phpbb\event\dispatcher;
 
 /**
  * Reduce Search Index Cron Task.
@@ -34,24 +37,44 @@ class auto_reduce_sync extends base
 	/** @var \phpbb\log\log */
 	protected $phpbb_log;
 
-	/** @var ContainerInterface */
-	protected $phpbb_container;
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var \phpbb\user */
+	protected $phpbb_dispatcher;
+
+	/** @var string phpBB root path */
+	protected $phpbb_root_path;
+
+	/** @var string phpBB phpEx */
+	protected $phpEx;
 
 	/**
 	* Constructor for cron task
 	*
-	* @param \phpbb\config\config				$config			phpBB config
-	* @param \phpbb\db\driver\driver_interface	$db				phpBB DBAL object
-	* @param \phpbb\log\log						$phpbb_log		phpBB log
-	* @param ContainerInterface					$phpbb_container
+	* @param \phpbb\config\config				$config				phpBB config
+	* @param \phpbb\db\driver\driver_interface	$db					phpBB DBAL object
+	* @param \phpbb\log\log						$phpbb_log			phpBB log
+	* @param \phpbb\auth\auth					$auth				phpBB auth
+	* @param \phpbb\user						$user				phpBB user
+	* @param \phpbb\event\dispatcher			$dispatcher			phpBB dispatcher
+	* @param string								$phpbb_root_path	phpBB root path
+	* @param string								$phpEx				phpBB phpEx
 	* @access public
 	*/
-	public function __construct(config $config, driver_interface $db, log $phpbb_log, ContainerInterface $phpbb_container)
+	public function __construct(config $config, driver_interface $db, log $phpbb_log, auth $auth, user $user, dispatcher $phpbb_dispatcher, $phpbb_root_path, $phpEx)
 	{
-		$this->config					= $config;
-		$this->db						= $db;
-		$this->phpbb_log				= $phpbb_log;
-		$this->phpbb_container			= $phpbb_container;
+		$this->config			= $config;
+		$this->db				= $db;
+		$this->phpbb_log		= $phpbb_log;
+		$this->auth				= $auth;
+		$this->user				= $user;
+		$this->phpbb_dispatcher	= $phpbb_dispatcher;
+		$this->phpbb_root_path	= $phpbb_root_path;
+		$this->phpEx			= $phpEx;
 	}
 
 	/**
@@ -102,7 +125,7 @@ class auto_reduce_sync extends base
 
 			$dark1_rsi_interval = $this->config['dark1_rsi_interval'] / 86400;
 			$dark1_rsi_time = date('Y-m-d h:i:s A P', (int) $this->config['dark1_rsi_time']);
-			$this->phpbb_log->add('admin', '', '', 'RSI_AUTO_LOG', time(), array($dark1_rsi_interval, $dark1_rsi_time));
+			$this->phpbb_log->add('admin', 'ANONYMOUS', '127.0.0.1', 'RSI_AUTO_LOG', time(), array($dark1_rsi_interval, $dark1_rsi_time));
 		}
 
 		// Update the last backup time
@@ -133,13 +156,24 @@ class auto_reduce_sync extends base
 	{
 		$post_ids = $poster_ids = $forum_ids = $topic_ids = array();
 
-		$sql = 'SELECT t.topic_id, p.post_id, p.poster_id, p.forum_id, f.dark1_rsi_f_enable' . PHP_EOL .
-				'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
-				'LEFT JOIN ' . TOPICS_TABLE . ' as t' . PHP_EOL .
-				'ON t.topic_id = p.topic_id' . PHP_EOL .
-				'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
-				'ON f.forum_id = p.forum_id' . PHP_EOL .
-				'WHERE f.dark1_rsi_f_enable >= 2 AND t.topic_time <= ' . (int) $this->config['dark1_rsi_time'];
+		$sql_ary = [
+			'SELECT'	=> 't.topic_id, p.post_id, p.poster_id, p.forum_id, f.dark1_rsi_f_enable',
+			'FROM'		=> [
+				POSTS_TABLE		=> 'p',
+			],
+			'LEFT_JOIN' => [
+				[
+					'FROM'	=> [TOPICS_TABLE => 't'],
+					'ON'	=> 't.topic_id = p.topic_id',
+				],
+				[
+					'FROM'	=> [FORUMS_TABLE => 'f'],
+					'ON'	=> 'f.forum_id = p.forum_id',
+				],
+			],
+			'WHERE'	=> 'f.dark1_rsi_f_enable >= ' . (int) consts::F_ENABLE_TOPIC . ' AND t.topic_time <= ' . (int) $this->config['dark1_rsi_time'],
+		];
+		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 		$result = $this->db->sql_query($sql);
 
 		while ($row = $this->db->sql_fetchrow($result))
@@ -148,19 +182,19 @@ class auto_reduce_sync extends base
 			$poster_ids[] = (int) $row['poster_id'];
 			$forum_ids[] = (int) $row['forum_id'];
 
-			if ($row['dark1_rsi_f_enable'] == 3)
+			if ($row['dark1_rsi_f_enable'] == consts::F_ENABLE_LOCK)
 			{
 				$topic_ids[] = (int) $row['topic_id'];
 			}
 		}
 		$this->db->sql_freeresult($result);
 
-		return array(
+		return [
 			'post_ids' => $post_ids,
 			'poster_ids' => $poster_ids,
 			'forum_ids' => $forum_ids,
 			'topic_ids' => $topic_ids,
-		);
+		];
 	}
 
 	/**
@@ -173,11 +207,20 @@ class auto_reduce_sync extends base
 	{
 		$post_ids = $poster_ids = $forum_ids = array();
 
-		$sql = 'SELECT p.post_id, p.poster_id, p.forum_id' . PHP_EOL .
-				'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
-				'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
-				'ON f.forum_id = p.forum_id' . PHP_EOL .
-				'WHERE f.dark1_rsi_f_enable = 1 AND p.post_time <= ' . (int) $this->config['dark1_rsi_time'];
+		$sql_ary = [
+			'SELECT'	=> 'p.post_id, p.poster_id, p.forum_id',
+			'FROM'		=> [
+				POSTS_TABLE		=> 'p',
+			],
+			'LEFT_JOIN' => [
+				[
+					'FROM'	=> [FORUMS_TABLE => 'f'],
+					'ON'	=> 'f.forum_id = p.forum_id',
+				],
+			],
+			'WHERE'	=> 'f.dark1_rsi_f_enable = ' . (int) consts::F_ENABLE_POST . ' AND p.post_time <= ' . (int) $this->config['dark1_rsi_time'],
+		];
+		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 		$result = $this->db->sql_query($sql);
 
 		while ($row = $this->db->sql_fetchrow($result))
@@ -188,11 +231,11 @@ class auto_reduce_sync extends base
 		}
 		$this->db->sql_freeresult($result);
 
-		return array(
+		return [
 			'post_ids' => $post_ids,
 			'poster_ids' => $poster_ids,
 			'forum_ids' => $forum_ids,
-		);
+		];
 	}
 
 	/**
@@ -206,8 +249,8 @@ class auto_reduce_sync extends base
 	{
 		if (count($topic_ids) > 0)
 		{
-			$sql = 'UPDATE ' . TOPICS_TABLE . PHP_EOL .
-					'SET topic_status = ' . ITEM_LOCKED  . PHP_EOL .
+			$sql = 'UPDATE ' . TOPICS_TABLE .
+					'SET topic_status = ' . ITEM_LOCKED  .
 					'WHERE ' . $this->db->sql_in_set('topic_id', $topic_ids);
 			$this->db->sql_query($sql);
 		}
@@ -229,13 +272,7 @@ class auto_reduce_sync extends base
 		if ($identifier == 'fulltext_native' && class_exists($search_type))
 		{
 			$error = false;
-			$phpbb_root_path = $this->phpbb_container->getParameter('core.root_path');
-			$phpEx = $this->phpbb_container->getParameter('core.php_ext');
-			$auth = $this->phpbb_container->get('auth');
-			$user = $this->phpbb_container->get('user');
-			$phpbb_dispatcher = $this->phpbb_container->get('dispatcher');
-
-			$search = new $search_type($error, $phpbb_root_path, $phpEx, $auth, $this->config, $this->db, $user, $phpbb_dispatcher);
+			$search = new $search_type($error, $this->phpbb_root_path, $this->phpEx, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
 			if ($error === false)
 			{
 				@$search->index_remove($post_ids, $poster_ids, $forum_ids);

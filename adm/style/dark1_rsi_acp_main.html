@@ -22,8 +22,8 @@
 				<div>{{ lang('ACP_RSI_ENABLE_EXPLAIN') }}</div>
 			</dt>
 			<dd>
-				<label><input type="radio" class="radio" name="dark1_rsi_enable" value="1" {% if RSI_ENABLE %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="dark1_rsi_enable" value="0" {% if not RSI_ENABLE %}checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				<label><input type="radio" class="radio" name="dark1_rsi_enable" id="dark1_rsi_enable" value="1" {% if RSI_ENABLE %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="dark1_rsi_enable" id="dark1_rsi_enable" value="0" {% if not RSI_ENABLE %}checked="checked"{% endif %} /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
@@ -34,6 +34,8 @@
 			</dt>
 			<dd>
 				<input type="text" name="dark1_rsi_time" id="dark1_rsi_time" value="{{ RSI_TIME }}" size="45" maxlength="80" />
+				<br>
+				<div>{{ lang('ACP_RSI_FORMAT') ~ lang('COLON') }} YYYY-MM-DD hh:ii:ss AA +/-zh:zm</div>
 			</dd>
 		</dl>
 		<dl>
@@ -55,11 +57,9 @@
 	</fieldset>
 
 	<script>
-	//<![CDATA[
 		var TimeFormat = "%Y-%m-%d %h:%i:%s %p %:";
-		var mode = "{{ RSI_MODE }}";
-		var TimeLatest = "{{ RSI_CURR_TIME }}";
-	//]]>
+		var mode = "{{ RSI_MODE|e('js') }}";
+		var TimeLatest = "{{ RSI_CURR_TIME|e('js') }}";
 	</script>
 
 </form>

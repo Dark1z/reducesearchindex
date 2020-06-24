@@ -14,11 +14,13 @@ namespace dark1\reducesearchindex\event;
  * @ignore
  */
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use dark1\reducesearchindex\core\consts;
 use phpbb\config\config;
 use phpbb\db\driver\driver_interface as db_driver;
 use phpbb\cache\driver\driver_interface as cache_driver;
 use phpbb\template\template;
 use phpbb\user;
+use phpbb\language\language;
 
 /**
  * Reduce Search Index Event listener.
@@ -40,6 +42,9 @@ class main_listener implements EventSubscriberInterface
 	/** @var \phpbb\user */
 	protected $user;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	/**
 	 * Constructor for listener
 	 *
@@ -48,15 +53,17 @@ class main_listener implements EventSubscriberInterface
 	 * @param \phpbb\cache\driver\driver_interface	$cache		phpBB Cache object
 	 * @param \phpbb\template\template				$template	phpBB template
 	 * @param \phpbb\user							$user		phpBB user
+	 * @param \phpbb\language\language				$language	phpBB language object
 	 * @access public
 	 */
-	public function __construct(config $config, db_driver $db, cache_driver $cache, template $template, user $user)
+	public function __construct(config $config, db_driver $db, cache_driver $cache, template $template, user $user, language $language)
 	{
 		$this->config		= $config;
 		$this->db			= $db;
 		$this->cache		= $cache;
 		$this->template		= $template;
 		$this->user			= $user;
+		$this->language		= $language;
 	}
 
 	/**
@@ -68,49 +75,30 @@ class main_listener implements EventSubscriberInterface
 	*/
 	public static function getSubscribedEvents()
 	{
-		return array(
-			'core.user_setup'							=> 'load_language_on_setup',
-			'core.page_header_after'					=> 'page_header_after',
+		return [
+			'core.search_modify_submit_parameters'		=> 'search_modify_submit_parameters',
 			'core.search_native_index_before'			=> 'search_native_index_before',
-		);
+		];
 	}
 
 
 
 	/**
-	 * Load common language files during user setup
+	 * Search Page Notice
 	 *
 	 * @param \phpbb\event\data $event	Event object
 	 * @return null
 	 * @access public
 	 */
-	public function load_language_on_setup($event)
-	{
-		$lang_set_ext = $event['lang_set_ext'];
-		$lang_set_ext[] = array(
-			'ext_name' => 'dark1/reducesearchindex',
-			'lang_set' => 'lang_rsi',
-		);
-		$event['lang_set_ext'] = $lang_set_ext;
-	}
-
-
-
-	/**
-	 * Search Page Header After
-	 *
-	 * @param \phpbb\event\data $event	Event object
-	 * @return null
-	 * @access public
-	 */
-	public function page_header_after($event)
+	public function search_modify_submit_parameters($event)
 	{
 		if ($this->config['dark1_rsi_enable'])
 		{
-			$this->template->assign_vars(array(
+			$this->language->add_lang('lang_rsi', 'dark1/reducesearchindex');
+			$this->template->assign_vars([
 				'RSI_SEARCH_FLAG'		=> $this->config['dark1_rsi_enable'],
 				'RSI_SEARCH_TIME'		=> $this->user->create_datetime()->setTimestamp((int) $this->config['dark1_rsi_time']),
-			));
+			]);
 		}
 	}
 
@@ -132,11 +120,11 @@ class main_listener implements EventSubscriberInterface
 		{
 			$forum = $this->get_search_forum($post_id);
 
-			if ($forum['dark1_rsi_f_enable'] >= 2 && $forum['topic_time'] <= $this->config['dark1_rsi_time'])
+			if ($forum['dark1_rsi_f_enable'] >= consts::F_ENABLE_TOPIC && $forum['topic_time'] <= $this->config['dark1_rsi_time'])
 			{
 				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = array();
 			}
-			else if ($forum['dark1_rsi_f_enable'] == 1 && $forum['post_time'] <= $this->config['dark1_rsi_time'])
+			else if ($forum['dark1_rsi_f_enable'] == consts::F_ENABLE_POST && $forum['post_time'] <= $this->config['dark1_rsi_time'])
 			{
 				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = array();
 			}
@@ -163,13 +151,24 @@ class main_listener implements EventSubscriberInterface
 
 		if ($search_matrix === false || !isset($search_matrix[$post_id]))
 		{
-			$sql = 'SELECT f.dark1_rsi_f_enable, t.topic_time, p.post_time' . PHP_EOL .
-					'FROM ' . POSTS_TABLE . ' as p' . PHP_EOL .
-					'LEFT JOIN ' . TOPICS_TABLE . ' as t' . PHP_EOL .
-					'ON t.topic_id = p.topic_id' . PHP_EOL .
-					'LEFT JOIN ' . FORUMS_TABLE . ' as f' . PHP_EOL .
-					'ON f.forum_id = p.forum_id' . PHP_EOL .
-					'WHERE p.post_id = ' . (int) $post_id;
+			$sql_ary = [
+				'SELECT'	=> 'f.dark1_rsi_f_enable, t.topic_time, p.post_time',
+				'FROM'		=> [
+					POSTS_TABLE		=> 'p',
+				],
+				'LEFT_JOIN' => [
+					[
+						'FROM'	=> [TOPICS_TABLE => 't'],
+						'ON'	=> 't.topic_id = p.topic_id',
+					],
+					[
+						'FROM'	=> [FORUMS_TABLE => 'f'],
+						'ON'	=> 'f.forum_id = p.forum_id',
+					],
+				],
+				'WHERE'	=> 'p.post_id = ' . (int) $post_id,
+			];
+			$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 			$result = $this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result))
 			{

@@ -40,6 +40,7 @@ services:
             - '@cache.driver'
             - '@template'
             - '@user'
+            - '@language'
         tags:
             - { name: event.listener }
 
@@ -49,7 +50,11 @@ services:
             - '@config'
             - '@dbal.conn'
             - '@log'
-            - '@service_container'
+            - '@auth'
+            - '@user'
+            - '@dispatcher'
+            - '%core.root_path%'
+            - '%core.php_ext%'
         calls:
             - [set_name, [dark1.reducesearchindex.cron.auto_reduce_sync]]
         tags:

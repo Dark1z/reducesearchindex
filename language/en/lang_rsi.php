@@ -41,12 +41,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	// phpBB Log
-	'ACP_RSI_LOG_SET_SAV'	=> '<strong>Reduce Search Index [RSI]</strong><br>» %s saved successfully!',
-	'RSI_AUTO_LOG'			=> '<strong>Reduce Search Index [RSI]</strong><br>» Auto Reduce Updater completed.<br>» Search Restricted for Last “%1$s” Day(s) from “%2$s”',
-
 	// Search Notice
 	'RSI_NOTICE'			=> 'Search Notice',
 	'RSI_NOTICE_TEXT'		=> 'The search results are restricted and only available from',
-
 ));

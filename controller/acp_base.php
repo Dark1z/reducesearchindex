@@ -109,7 +109,7 @@ class acp_base
 		$ext_by_dark1 = 'Dark❶ [dark1]';
 
 		// Add our common language file
-		$this->language->add_lang('lang_rsi', 'dark1/reducesearchindex');
+		$this->language->add_lang('lang_acp_rsi', 'dark1/reducesearchindex');
 
 		// Create a form key for preventing CSRF attacks
 		add_form_key('dark1_rsi_acp_' . $this->mode);

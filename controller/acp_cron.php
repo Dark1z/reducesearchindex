@@ -85,11 +85,11 @@ class acp_cron extends acp_base
 
 		// Set output variables for display in the template
 		$this->template->assign_vars([
-			'ENABLE_CRON'		=> $this->config['dark1_rsi_auto_reduce_sync_enable'],
-			'CRON_INTERVAL'		=> ($this->config['dark1_rsi_auto_reduce_sync_gc'] / 86400),
-			'CRON_LAST_RUN'		=> $this->user->format_date($this->config['dark1_rsi_auto_reduce_sync_last_gc'], 'Y-m-d h:i:s A P', true),
-			'CRON_NEXT_RUN'		=> $this->user->format_date($this->config['dark1_rsi_auto_reduce_sync_last_gc'] + $this->config['dark1_rsi_auto_reduce_sync_gc'], 'Y-m-d h:i:s A P', true),
-			'CRON_PREV_RUN'		=> $this->user->format_date($this->config['dark1_rsi_auto_reduce_sync_last_gc'] - $this->config['dark1_rsi_auto_reduce_sync_gc'], 'Y-m-d h:i:s A P', true),
+			'RSI_ENABLE_CRON'		=> $this->config['dark1_rsi_auto_reduce_sync_enable'],
+			'RSI_CRON_INTERVAL'		=> ($this->config['dark1_rsi_auto_reduce_sync_gc'] / 86400),
+			'RSI_CRON_LAST_RUN'		=> $this->user->format_date($this->config['dark1_rsi_auto_reduce_sync_last_gc'], 'Y-m-d h:i:s A P', true),
+			'RSI_CRON_NEXT_RUN'		=> $this->user->format_date($this->config['dark1_rsi_auto_reduce_sync_last_gc'] + $this->config['dark1_rsi_auto_reduce_sync_gc'], 'Y-m-d h:i:s A P', true),
+			'RSI_CRON_PREV_RUN'		=> $this->user->format_date($this->config['dark1_rsi_auto_reduce_sync_last_gc'] - $this->config['dark1_rsi_auto_reduce_sync_gc'], 'Y-m-d h:i:s A P', true),
 		]);
 	}
 }

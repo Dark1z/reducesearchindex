@@ -7,7 +7,7 @@ This Extension Lets Admin to control Search Index .  😉
 ![Travis-CI](https://img.shields.io/badge/Travis-CI-8000FF.svg) : [![Build Status](https://travis-ci.com/dark-1/reducesearchindex.svg?branch=master)](https://travis-ci.com/dark-1/reducesearchindex)   
 ![Scrutinizer-CI](https://img.shields.io/badge/Scrutinizer-CI-8000FF.svg) : [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/badges/build.png?b=master)](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/build-status/master)   
 ![Actions-CI](https://img.shields.io/badge/Actions-CI-8000FF.svg) : [![Actions Status](https://github.com/dark-1/reducesearchindex/workflows/Actions%20CI/badge.svg)](https://github.com/dark-1/reducesearchindex/actions?workflow=Actions%20CI)   
-![Shields.IO](https://img.shields.io/badge/Shields-IO-8000FF.svg?style=flat-square) : [![GitHub release](https://img.shields.io/github/release/dark-1/reducesearchindex.svg?style=flat-square) ![license](https://img.shields.io/github/license/dark-1/reducesearchindex.svg?style=flat-square) ![Github All Releases](https://img.shields.io/github/downloads/dark-1/reducesearchindex/total.svg?style=flat-square)](https://github.com/dark-1/reducesearchindex)   
+![Shields.IO](https://img.shields.io/badge/Shields-IO-8000FF.svg?style=flat-square) : [![GitHub release](https://img.shields.io/github/release/dark-1/reducesearchindex.svg?style=flat-square) ![license](https://img.shields.io/github/license/dark-1/reducesearchindex.svg?style=flat-square)](https://github.com/dark-1/reducesearchindex)   
    
    
 ## **Features :**   

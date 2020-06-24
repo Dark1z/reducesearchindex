@@ -20,8 +20,8 @@
 				<label for="dark1_rsi_auto_reduce_sync_enable">{{ lang('ACP_RSI_CRON_ENABLE') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				<label><input type="radio" class="radio" name="dark1_rsi_auto_reduce_sync_enable" value="1" {% if ENABLE_CRON %}checked="checked"{% endif %} /> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="dark1_rsi_auto_reduce_sync_enable" value="0" {% if not ENABLE_CRON %}checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+				<label><input type="radio" class="radio" name="dark1_rsi_auto_reduce_sync_enable" id="dark1_rsi_auto_reduce_sync_enable" value="1" {% if RSI_ENABLE_CRON %}checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="dark1_rsi_auto_reduce_sync_enable" id="dark1_rsi_auto_reduce_sync_enable" value="0" {% if not RSI_ENABLE_CRON %}checked="checked"{% endif %} /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
@@ -29,7 +29,7 @@
 				<label>{{ lang('ACP_RSI_CRON_INTERVAL') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				<input type="number" min="1" max="999" size="3" maxlength="3" step="1" name="dark1_rsi_auto_reduce_sync_gc" value="{{ CRON_INTERVAL }}" style="width: 50px;" /> {{ lang('ACP_RSI_DAYS') }}
+				<input type="number" min="1" max="999" size="3" maxlength="3" step="1" name="dark1_rsi_auto_reduce_sync_gc" value="{{ RSI_CRON_INTERVAL }}" style="width: 50px;" /> {{ lang('ACP_RSI_DAYS') }}
 			</dd>
 		</dl>
 		<dl>
@@ -37,7 +37,9 @@
 				<label for="dark1_rsi_auto_reduce_sync_last_gc">{{ lang('ACP_RSI_CRON_LAST_RUN') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				<input type="text" name="dark1_rsi_auto_reduce_sync_last_gc" id="dark1_rsi_auto_reduce_sync_last_gc" value="{{ CRON_LAST_RUN }}" size="45" maxlength="80" />
+				<input type="text" name="dark1_rsi_auto_reduce_sync_last_gc" id="dark1_rsi_auto_reduce_sync_last_gc" value="{{ RSI_CRON_LAST_RUN }}" size="45" maxlength="80" />
+				<br>
+				<div>{{ lang('ACP_RSI_FORMAT') ~ lang('COLON') }} YYYY-MM-DD hh:ii:ss AA +/-zh:zm</div>
 			</dd>
 		</dl>
 		<dl>
@@ -45,7 +47,7 @@
 				<label>{{ lang('ACP_RSI_CRON_NEXT_RUN') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				<input type="text" value="{{ CRON_NEXT_RUN }}" size="45" maxlength="80" disabled />
+				<input type="text" value="{{ RSI_CRON_NEXT_RUN }}" size="45" maxlength="80" disabled />
 			</dd>
 		</dl>
 		<dl>
@@ -66,11 +68,9 @@
 	</fieldset>
 
 	<script>
-	//<![CDATA[
 		var TimeFormat = "%Y-%m-%d %h:%i:%s %p %:";
-		var mode = "{{ RSI_MODE }}";
-		var EarliestTimeAuto = "{{ CRON_PREV_RUN }}";
-	//]]>
+		var mode = "{{ RSI_MODE|e('js') }}";
+		var EarliestTimeAuto = "{{ RSI_CRON_PREV_RUN|e('js') }}";
 	</script>
 
 </form>
