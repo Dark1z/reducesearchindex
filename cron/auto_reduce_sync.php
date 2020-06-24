@@ -43,7 +43,7 @@ class auto_reduce_sync extends base
 	/** @var \phpbb\user */
 	protected $user;
 
-	/** @var \phpbb\user */
+	/** @var \phpbb\event\dispatcher */
 	protected $phpbb_dispatcher;
 
 	/** @var string phpBB root path */

@@ -43,6 +43,6 @@ class ext extends base
 
 		$phpbb_version = phpbb_version_compare(PHPBB_VERSION, $config['version'], '>=') ? PHPBB_VERSION : $config['version'] ;
 
-		return phpbb_version_compare($phpbb_version, PHPBB_MIN_3_2_X, '>=');
+		return phpbb_version_compare($phpbb_version, self::PHPBB_MIN_3_2_X, '>=');
 	}
 }

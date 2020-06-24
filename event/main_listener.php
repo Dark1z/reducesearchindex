@@ -86,11 +86,10 @@ class main_listener implements EventSubscriberInterface
 	/**
 	 * Search Page Notice
 	 *
-	 * @param \phpbb\event\data $event	Event object
 	 * @return null
 	 * @access public
 	 */
-	public function search_modify_submit_parameters($event)
+	public function search_modify_submit_parameters()
 	{
 		if ($this->config['dark1_rsi_enable'])
 		{
