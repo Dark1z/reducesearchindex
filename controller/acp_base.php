@@ -117,7 +117,6 @@ class acp_base
 		// Set u_action in the template
 		$this->template->assign_vars([
 			'U_ACTION'		=> $this->u_action,
-			'RSI_MODE'		=> $this->mode,
 			'RSI_EXT_MODE'	=> $this->language->lang('ACP_RSI_' . strtoupper($this->mode)),
 			'RSI_EXT_NAME'	=> $ext_name_rsi,
 			'RSI_EXT_DEV'	=> $ext_by_dark1,

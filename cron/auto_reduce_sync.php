@@ -84,7 +84,7 @@ class auto_reduce_sync extends base
 	*/
 	public function is_runnable()
 	{
-		return ($this->config['dark1_rsi_auto_reduce_sync_enable'] && $this->config['dark1_rsi_enable']);
+		return ($this->config['dark1_rsi_auto_reduce_sync_enable']);
 	}
 
 	/**
@@ -94,7 +94,7 @@ class auto_reduce_sync extends base
 	*/
 	public function should_run()
 	{
-		return (($this->config['dark1_rsi_auto_reduce_sync_last_gc'] < (time() - $this->config['dark1_rsi_auto_reduce_sync_gc'])) && ($this->config['dark1_rsi_time'] < (time() - $this->config['dark1_rsi_interval'])));
+		return (($this->config['dark1_rsi_auto_reduce_sync_last_gc'] < (time() - $this->config['dark1_rsi_auto_reduce_sync_gc'])));
 	}
 
 	/**
@@ -124,11 +124,11 @@ class auto_reduce_sync extends base
 			$this->reduce_search_index($post_ids, $poster_ids, $forum_ids);
 
 			$dark1_rsi_interval = $this->config['dark1_rsi_interval'] / 86400;
-			$dark1_rsi_time = date('Y-m-d h:i:s A P', (int) $this->config['dark1_rsi_time']);
-			$this->phpbb_log->add('admin', 'ANONYMOUS', '127.0.0.1', 'RSI_AUTO_LOG', time(), array($dark1_rsi_interval, $dark1_rsi_time));
+			$dark1_rsi_time = date(consts::TIME_FORMAT, (int) $this->config['dark1_rsi_time']);
+			$this->phpbb_log->add('admin', ANONYMOUS, '127.0.0.1', 'RSI_AUTO_LOG', time(), array($dark1_rsi_interval, $dark1_rsi_time));
 		}
 
-		// Update the last backup time
+		// Update the last run time
 		$this->config->set('dark1_rsi_auto_reduce_sync_last_gc', time(), false);
 	}
 
@@ -250,8 +250,8 @@ class auto_reduce_sync extends base
 		if (count($topic_ids) > 0)
 		{
 			$sql = 'UPDATE ' . TOPICS_TABLE .
-					'SET topic_status = ' . ITEM_LOCKED  .
-					'WHERE ' . $this->db->sql_in_set('topic_id', $topic_ids);
+					' SET topic_status = ' . ITEM_LOCKED  .
+					' WHERE ' . $this->db->sql_in_set('topic_id', $topic_ids);
 			$this->db->sql_query($sql);
 		}
 	}

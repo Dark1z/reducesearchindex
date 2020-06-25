@@ -1,10 +1,6 @@
 {% include 'overall_header.html' %}
 
 {% INCLUDECSS '@dark1_reducesearchindex/dark1_rsi_acp_style.css' %}
-{% INCLUDECSS '@dark1_reducesearchindex/DateTimePicker/anytime.css' %}
-{% INCLUDEJS '@dark1_reducesearchindex/DateTimePicker/anytime.js' %}
-{% INCLUDEJS '@dark1_reducesearchindex/DateTimePicker/anytimetz.js' %}
-{% INCLUDEJS '@dark1_reducesearchindex/dark1_rsi_acp_script.js' %}
 
 <h1>{{ RSI_EXT_NAME }}</h1>
 <div>{{ lang('ACP_RSI_BY') }}&nbsp;{{ RSI_EXT_DEV }}</div>
@@ -34,12 +30,10 @@
 		</dl>
 		<dl>
 			<dt>
-				<label for="dark1_rsi_auto_reduce_sync_last_gc">{{ lang('ACP_RSI_CRON_LAST_RUN') ~ lang('COLON') }}</label>
+				<label>{{ lang('ACP_RSI_CRON_LAST_RUN') ~ lang('COLON') }}</label>
 			</dt>
 			<dd>
-				<input type="text" name="dark1_rsi_auto_reduce_sync_last_gc" id="dark1_rsi_auto_reduce_sync_last_gc" value="{{ RSI_CRON_LAST_RUN }}" size="45" maxlength="80" />
-				<br>
-				<div>{{ lang('ACP_RSI_FORMAT') ~ lang('COLON') }} YYYY-MM-DD hh:ii:ss AA +/-zh:zm</div>
+				<input type="text" value="{{ RSI_CRON_LAST_RUN }}" size="45" maxlength="80" disabled />
 			</dd>
 		</dl>
 		<dl>
@@ -66,12 +60,6 @@
 		<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
 		{{ S_FORM_TOKEN }}
 	</fieldset>
-
-	<script>
-		var TimeFormat = "%Y-%m-%d %h:%i:%s %p %:";
-		var mode = "{{ RSI_MODE|e('js') }}";
-		var EarliestTimeAuto = "{{ RSI_CRON_PREV_RUN|e('js') }}";
-	</script>
 
 </form>
 

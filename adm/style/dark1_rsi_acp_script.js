@@ -11,48 +11,26 @@
 
 	'use strict';
 
-	var TimeConv = new AnyTime.Converter({
-		format: TimeFormat
+	let TimeConv = new AnyTime.Converter({
+		format: RSI_TimeFormat
 	});
 
-	if (mode === 'main')
-	{
-		var options = {
-			format: TimeFormat,
-			latest: TimeConv.format(TimeConv.parse(TimeLatest))
-		};
-		$('#dark1_rsi_time').click(function (e)
-		{
-			$(this).off('click').AnyTime_picker(options).focus();
-		}).keydown(function (e)
-		{
-			var key = e.keyCode || e.which;
-			if ((key != 16) && (key != 9))
-			{ // shift, del, tab
-				$(this).off('keydown').AnyTime_picker(options).focus();
-				e.preventDefault();
-			}
-		});
-	}
+	let options = {
+		format: RSI_TimeFormat,
+		latest: TimeConv.format(TimeConv.parse(RSI_TimeLatest))
+	};
 
-	if (mode === 'cron')
+	$('#dark1_rsi_time').click(function (e)
 	{
-		var options_auto_ls = {
-			format: TimeFormat,
-			earliest: TimeConv.format(TimeConv.parse(EarliestTimeAuto))
-		};
-		$('#dark1_rsi_auto_reduce_sync_last_gc').click(function (e)
-		{
-			$(this).off('click').AnyTime_picker(options_auto_ls).focus();
-		}).keydown(function (e)
-		{
-			var key = e.keyCode || e.which;
-			if ((key != 16) && (key != 9))
-			{ // shift, del, tab
-				$(this).off('keydown').AnyTime_picker(options_auto_ls).focus();
-				e.preventDefault();
-			}
-		});
-	}
+		$(this).off('click').AnyTime_picker(options).focus();
+	}).keydown(function (e)
+	{
+		let key = e.keyCode || e.which;
+		if ((key != 16) && (key != 9))
+		{ // shift, del, tab
+			$(this).off('keydown').AnyTime_picker(options).focus();
+			e.preventDefault();
+		}
+	});
 
 })(jQuery); // Avoid conflicts with other libraries

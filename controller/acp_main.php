@@ -13,6 +13,7 @@ namespace dark1\reducesearchindex\controller;
 /**
  * @ignore
  */
+use dark1\reducesearchindex\core\consts;
 use phpbb\config\config;
 use phpbb\template\template;
 use phpbb\user;
@@ -70,8 +71,8 @@ class acp_main extends acp_base
 		$this->template->assign_vars([
 			'RSI_ENABLE'		=> $this->config['dark1_rsi_enable'],
 			'RSI_INTERVAL'		=> ($this->config['dark1_rsi_interval'] / 86400),
-			'RSI_TIME'			=> $this->user->format_date($this->config['dark1_rsi_time'], 'Y-m-d h:i:s A P', true),
-			'RSI_CURR_TIME'		=> $this->user->format_date(time(), 'Y-m-d h:i:s A P', true),
+			'RSI_TIME'			=> $this->user->format_date($this->config['dark1_rsi_time'], consts::TIME_FORMAT, true),
+			'RSI_CURR_TIME'		=> $this->user->format_date(time(), consts::TIME_FORMAT, true),
 		]);
 	}
 }
