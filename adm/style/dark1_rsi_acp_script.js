@@ -11,13 +11,15 @@
 
 	'use strict';
 
+	let TimeFormat = "%Y-%m-%d %h:%i:%s %p %:";
+
 	let TimeConv = new AnyTime.Converter({
-		format: RSI_TimeFormat
+		format: TimeFormat
 	});
 
 	let options = {
-		format: RSI_TimeFormat,
-		latest: TimeConv.format(TimeConv.parse(RSI_TimeLatest))
+		format: TimeFormat,
+		latest: TimeConv.format(TimeConv.parse(rsiTimeLatest))
 	};
 
 	$('#dark1_rsi_time').click(function (e)
