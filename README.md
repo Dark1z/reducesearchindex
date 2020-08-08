@@ -31,8 +31,7 @@ This Extension Lets Admin to control Search Index .  😉
 1. **phpBB Native Fulltext** `fulltext_native` : This is Fully Supported.   
 2. **MySQL Fulltext** `fulltext_mysql` : This can not be Supported due fully DataBase side implementation & management.   
 3. **PostgreSQL Fulltext** `fulltext_postgres` : This can not be Supported due fully DataBase side implementation & management.   
-4. **Sphinx Fulltext** `fulltext_sphinx` : This is not currently Supported because I myself do not know if it's supported or not,
-also if it's supported then *"how to ???"* , If somebody is able to help me with this then I'll be very happy, credits for the same will be given.   
+4. **Sphinx Fulltext** `fulltext_sphinx` : This can not be Supported because it's fully Sphinx class side implementation & management , which is outside the scope of phpBB.   
    
    
 ## For More Detail's & ScreenShot's : [GitHub Page](https://dark-1.github.io/reducesearchindex/)   
