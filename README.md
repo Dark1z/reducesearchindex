@@ -1,6 +1,6 @@
 # Reduce Search Index [RSI]
    
-This Extension Lets Admin to control Search Index .  😉   
+This Extension Lets Admin to control **phpBB Native Fulltext** Search Index .  😉   
    
    
 #### Status Badge for Reduce Search Index [RSI] on phpBB v3.3.x :   

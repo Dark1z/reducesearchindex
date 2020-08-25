@@ -56,7 +56,7 @@ $lang = array_merge($lang, array(
 	'ACP_RSI_INTERVAL_EXPLAIN'		=> 'Interval to Update “Reduce Time” when “Auto Reduce Sync” is run.<br>Default : 365 Day(s)',
 
 	// Forum
-	'ACP_RSI_FORUM_EXPLAIN'			=> 'Select the Option to Enable Reduce Search Index for each Forum.<br>Need to select at-least one Forum.<br>Following are Options',
+	'ACP_RSI_FORUM_EXPLAIN'			=> 'Select the Option to Enable Reduce Search Index for each Forum.<br>Need to select at-least one Forum.<br>Default : <b>Disable</b><br>Following are Options',
 	'ACP_RSI_TABLE_FORUM_NAME'		=> 'Forum Name',
 	'ACP_RSI_TABLE_FORUM_OPTION'	=> 'Forum Options',
 	'ACP_RSI_TABLE_LOCK'			=> 'Topic + Lock',

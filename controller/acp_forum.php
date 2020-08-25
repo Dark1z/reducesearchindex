@@ -20,6 +20,7 @@ use phpbb\template\template;
 use phpbb\user;
 use phpbb\db\driver\driver_interface as db_driver;
 use phpbb\cache\driver\driver_interface as cache_driver;
+use dark1\reducesearchindex\core\forum_map_rsi;
 
 /**
  * Reduce Search Index [RSI] ACP controller Forum.
@@ -32,24 +33,29 @@ class acp_forum extends acp_base
 	/** @var \phpbb\cache\driver\driver_interface */
 	protected $cache;
 
+	/** @var \dark1\reducesearchindex\core\forum_map_rsi */
+	protected $forum_map_rsi;
+
 	/**
 	 * Constructor.
 	 *
-	 * @param \phpbb\config\config					$config			Config object
-	 * @param \phpbb\language\language				$language		Language object
-	 * @param \phpbb\log\log						$log			Log object
-	 * @param \phpbb\request\request				$request		Request object
-	 * @param \phpbb\template\template				$template		Template object
-	 * @param \phpbb\user							$user			User object
-	 * @param \phpbb\db\driver\driver_interface		$db				Database object
-	 * @param \phpbb\cache\driver\driver_interface	$cache			Cache object
+	 * @param \phpbb\config\config							$config			Config object
+	 * @param \phpbb\language\language						$language		Language object
+	 * @param \phpbb\log\log								$log			Log object
+	 * @param \phpbb\request\request						$request		Request object
+	 * @param \phpbb\template\template						$template		Template object
+	 * @param \phpbb\user									$user			User object
+	 * @param \phpbb\db\driver\driver_interface				$db				Database object
+	 * @param \phpbb\cache\driver\driver_interface			$cache			Cache object
+	 * @param \dark1\reducesearchindex\core\forum_map_rsi	$forum_map_rsi	Forum Map RSI
 	 */
-	public function __construct(language $language, log $log, request $request, template $template, user $user, db_driver $db, cache_driver $cache)
+	public function __construct(language $language, log $log, request $request, template $template, user $user, db_driver $db, cache_driver $cache, forum_map_rsi $forum_map_rsi)
 	{
 		parent::__construct($language, $log, $request, $template, $user);
 
-		$this->db		= $db;
-		$this->cache	= $cache;
+		$this->db				= $db;
+		$this->cache			= $cache;
+		$this->forum_map_rsi	= $forum_map_rsi;
 	}
 
 	/**
@@ -80,61 +86,11 @@ class acp_forum extends acp_base
 	 */
 	private function print_forums()
 	{
-		$forums = [];
-		$sql = 'SELECT forum_id, forum_type, forum_name, parent_id, left_id, right_id, dark1_rsi_f_enable FROM ' . FORUMS_TABLE . ' ORDER BY left_id ASC';
-		$result = $this->db->sql_query($sql);
-		while ($row = $this->db->sql_fetchrow($result))
+		$forum_tpl_rows = $this->forum_map_rsi->main();
+
+		foreach ($forum_tpl_rows as $tpl_row)
 		{
-			$forums[] = $row;
-		}
-		$this->db->sql_freeresult($result);
-
-		$right = 0;
-		$padding_store = array('0' => '');
-		$padding = '';
-
-		foreach ($forums as $row)
-		{
-			$tpl_row = [];
-
-			if ($row['left_id'] < $right)
-			{
-				$padding .= '&nbsp; &nbsp; &nbsp;';
-				$padding_store[$row['parent_id']] = $padding;
-			}
-			else if ($row['left_id'] > $right + 1)
-			{
-				$padding = (isset($padding_store[$row['parent_id']])) ? $padding_store[$row['parent_id']] : '';
-			}
-			$right = $row['right_id'];
-
-			// Category forums are displayed for organizational purposes, but have no configuration
-			if ($row['forum_type'] == FORUM_CAT)
-			{
-				$tpl_row = [
-					'S_IS_CAT'		=> true,
-					'FORUM_PAD'		=> $padding . '&nbsp; &#8627; &nbsp;',
-					'FORUM_NAME'	=> $row['forum_name'],
-				];
-			}
-			// Normal forums have a radio input with the value selected based on the value of the setting
-			else if ($row['forum_type'] == FORUM_POST)
-			{
-				// The labels for all the inputs are constructed based on the forum IDs to make it easy to know which
-				$tpl_row = [
-					'S_IS_CAT'		=> false,
-					'FORUM_PAD'		=> $padding . '&nbsp; &#8627; &nbsp;',
-					'FORUM_NAME'	=> $row['forum_name'],
-					'FORUM_ID'		=> $row['forum_id'],
-					'ENABLE'		=> $row['dark1_rsi_f_enable'],
-				];
-			}
-			// Other forum types (links) are ignored
-
-			if (!empty($tpl_row))
-			{
-				$this->template->assign_block_vars('forumrow', $tpl_row);
-			}
+			$this->template->assign_block_vars('forumrow', $tpl_row);
 		}
 	}
 

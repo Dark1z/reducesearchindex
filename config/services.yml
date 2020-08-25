@@ -1,5 +1,10 @@
 services:
 
+    dark1.reducesearchindex.forum_map_rsi:
+        class: dark1\reducesearchindex\core\forum_map_rsi
+        arguments:
+            - '@dbal.conn'
+
     dark1.reducesearchindex.controller.acp.main:
         class: dark1\reducesearchindex\controller\acp_main
         arguments:
@@ -20,6 +25,7 @@ services:
             - '@user'
             - '@dbal.conn'
             - '@cache.driver'
+            - '@dark1.reducesearchindex.forum_map_rsi'
 
     dark1.reducesearchindex.controller.acp.cron:
         class: dark1\reducesearchindex\controller\acp_cron
