@@ -7,7 +7,7 @@ This Extension Lets Admin to control Search Index .  😉
 ![Travis-CI](https://img.shields.io/badge/Travis-CI-8000FF.svg) : [![Build Status](https://travis-ci.com/dark-1/reducesearchindex.svg?branch=master)](https://travis-ci.com/dark-1/reducesearchindex)   
 ![Scrutinizer-CI](https://img.shields.io/badge/Scrutinizer-CI-8000FF.svg) : [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/badges/build.png?b=master)](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/build-status/master)   
 ![Actions-CI](https://img.shields.io/badge/Actions-CI-8000FF.svg) : [![Actions Status](https://github.com/dark-1/reducesearchindex/workflows/Actions%20CI/badge.svg)](https://github.com/dark-1/reducesearchindex/actions?workflow=Actions%20CI)   
-![Shields.IO](https://img.shields.io/badge/Shields-IO-8000FF.svg?style=flat-square) : [![GitHub release](https://img.shields.io/github/release/dark-1/reducesearchindex.svg?style=flat-square) ![license](https://img.shields.io/github/license/dark-1/reducesearchindex.svg?style=flat-square) ![Github All Releases](https://img.shields.io/github/downloads/dark-1/reducesearchindex/total.svg?style=flat-square) ![HitCount](http://hits.dwyl.io/dark-1/reducesearchindex.svg)](https://github.com/dark-1/reducesearchindex)   
+![Shields.IO](https://img.shields.io/badge/Shields-IO-8000FF.svg?style=flat-square) : [![GitHub release](https://img.shields.io/github/release/dark-1/reducesearchindex.svg?style=flat-square) ![license](https://img.shields.io/github/license/dark-1/reducesearchindex.svg?style=flat-square)](https://github.com/dark-1/reducesearchindex)   
    
    
 ## **Features :**   
@@ -31,8 +31,7 @@ This Extension Lets Admin to control Search Index .  😉
 1. **phpBB Native Fulltext** `fulltext_native` : This is Fully Supported.   
 2. **MySQL Fulltext** `fulltext_mysql` : This can not be Supported due fully DataBase side implementation & management.   
 3. **PostgreSQL Fulltext** `fulltext_postgres` : This can not be Supported due fully DataBase side implementation & management.   
-4. **Sphinx Fulltext** `fulltext_sphinx` : This is not currently Supported because I myself do not know if it's supported or not,
-also if it's supported then *"how to ???"* , If somebody is able to help me with this then I'll be very happy, credits for the same will be given.   
+4. **Sphinx Fulltext** `fulltext_sphinx` : This can not be Supported because it's fully Sphinx class side implementation & management , which is outside the scope of phpBB.   
    
    
 ## **ScreenShot:**   
@@ -46,10 +45,7 @@ also if it's supported then *"how to ???"* , If somebody is able to help me with
 [![Index](./image/03.ACP.Forum.png "ACP Forum")](./image/03.ACP.Forum.png)   
    
 4. ACP Cron Page:   
-[![Index](./image/04.ACP.Cron.01.png "ACP Main")](./image/04.ACP.Cron.01.png)   
-   
-5. ACP Cron 2 Page:   
-[![Index](./image/05.ACP.Cron.02.png "ACP Main 2")](./image/05.ACP.Cron.02.png)   
+[![Index](./image/04.ACP.Cron.png "ACP Main")](./image/04.ACP.Cron.png)   
    
    
 ## **Installation :**   
@@ -91,11 +87,18 @@ Detailed phpBB standard Updation of Extensions here : [phpBB Extensions Updating
 Detailed phpBB standard Uninstallation of Extensions here : [phpBB Extensions Removing](https://www.phpbb.com/extensions/installing/#removing)   
    
    
-GitHub Repository: [reducesearchindex](https://github.com/dark-1/reducesearchindex)   
-phpBB Customisation Database Extension: [Reduce Search Index](https://www.phpbb.com/customise/db/extension/reduce_search_index)   
-For more Details Go Here : [Reduce Search Index [RSI]](https://dark-1.github.io/reducesearchindex)   
+## **Links :**   
    
-## License  [GPLv2](license.txt)
+**GitHub Repository** : [reducesearchindex](https://github.com/dark-1/reducesearchindex)   
+**phpBB Customisation Database Extension** : [Reduce Search Index](https://www.phpbb.com/customise/db/extension/reduce_search_index)   
+**For more Details Go Here** : [Reduce Search Index [RSI]](https://dark-1.github.io/reducesearchindex)   
+   
+**Credit where credit's due** :   
+Date & Time Picker : **Any+Time** by *Andrew M. Andrews III* at [ama3.com/anytime](https://www.ama3.com/anytime),   
+which can be found at `dark1/reducesearchindex/styles/all/template/DateTimePicker`   
+   
+   
+## License [GPLv2](license.txt)
    
 --------------   
 EnJoY  😃   
