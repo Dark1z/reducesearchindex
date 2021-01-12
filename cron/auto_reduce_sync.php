@@ -3,7 +3,7 @@
  *
  * Reduce Search Index [RSI]. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2020, Dark❶, https://dark1.tech
+ * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -125,7 +125,7 @@ class auto_reduce_sync extends base
 
 			$dark1_rsi_interval = $this->config['dark1_rsi_interval'] / 86400;
 			$dark1_rsi_time = date(consts::TIME_FORMAT, (int) $this->config['dark1_rsi_time']);
-			$this->phpbb_log->add('admin', ANONYMOUS, '127.0.0.1', 'RSI_AUTO_LOG', time(), array($dark1_rsi_interval, $dark1_rsi_time));
+			$this->phpbb_log->add('admin', ANONYMOUS, '127.0.0.1', 'RSI_AUTO_LOG', time(), [$dark1_rsi_interval, $dark1_rsi_time]);
 		}
 
 		// Update the last run time
@@ -154,7 +154,7 @@ class auto_reduce_sync extends base
 	*/
 	private function get_topic_ary()
 	{
-		$post_ids = $poster_ids = $forum_ids = $topic_ids = array();
+		$post_ids = $poster_ids = $forum_ids = $topic_ids = [];
 
 		$sql_ary = [
 			'SELECT'	=> 't.topic_id, p.post_id, p.poster_id, p.forum_id, f.dark1_rsi_f_enable',
@@ -205,7 +205,7 @@ class auto_reduce_sync extends base
 	*/
 	private function get_post_ary()
 	{
-		$post_ids = $poster_ids = $forum_ids = array();
+		$post_ids = $poster_ids = $forum_ids = [];
 
 		$sql_ary = [
 			'SELECT'	=> 'p.post_id, p.poster_id, p.forum_id',

@@ -3,7 +3,7 @@
  *
  * Reduce Search Index [RSI]. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2020, Dark❶, https://dark1.tech
+ * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -17,17 +17,17 @@ class rsi_002 extends migration
 
 	static public function depends_on()
 	{
-		return array('\dark1\reducesearchindex\migrations\rsi_001_install');
+		return ['\dark1\reducesearchindex\migrations\rsi_001_install'];
 	}
 
 	public function update_data()
 	{
-		return array(
+		return [
 			// Remove Config if Exist
-			array('if', array(
+			['if', [
 				isset($this->config['dark1_rsi']),
-				array('config.remove', array('dark1_rsi')),
-			)),
-		);
+				['config.remove', ['dark1_rsi']],
+			]],
+		];
 	}
 }

@@ -3,7 +3,7 @@
  *
  * Reduce Search Index [RSI]. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2020, Dark❶, https://dark1.tech
+ * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  *
@@ -21,7 +21,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACP_RSI_TITLE'	=> 'Reduce Search Index',
 
 	// phpBB Log
@@ -51,4 +51,4 @@ $lang = array_merge($lang, array(
 	'ACP_RSI_MAIN'	=> 'Main Settings',
 	'ACP_RSI_FORUM'	=> 'Forum Settings',
 	'ACP_RSI_CRON'	=> 'Cron Settings',
-));
+]);

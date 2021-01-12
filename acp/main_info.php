@@ -3,7 +3,7 @@
  *
  * Reduce Search Index [RSI]. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2020, Dark❶, https://dark1.tech
+ * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -17,26 +17,26 @@ class main_info
 {
 	public function module()
 	{
-		return array(
+		return [
 			'filename'	=> '\dark1\reducesearchindex\acp\main_module',
 			'title'		=> 'ACP_RSI_TITLE',
-			'modes'		=> array(
-				'main'	=> array(
+			'modes'		=> [
+				'main'	=> [
 					'title'	=> 'ACP_RSI_MAIN',
 					'auth'	=> 'ext_dark1/reducesearchindex && acl_a_board',
-					'cat'	=> array('ACP_RSI_TITLE')
-				),
-				'forum'	=> array(
+					'cat'	=> ['ACP_RSI_TITLE']
+				],
+				'forum'	=> [
 					'title'	=> 'ACP_RSI_FORUM',
 					'auth'	=> 'ext_dark1/reducesearchindex && acl_a_board',
-					'cat'	=> array('ACP_RSI_TITLE')
-				),
-				'cron'	=> array(
+					'cat'	=> ['ACP_RSI_TITLE']
+				],
+				'cron'	=> [
 					'title'	=> 'ACP_RSI_CRON',
 					'auth'	=> 'ext_dark1/reducesearchindex && acl_a_board',
-					'cat'	=> array('ACP_RSI_TITLE')
-				),
-			),
-		);
+					'cat'	=> ['ACP_RSI_TITLE']
+				],
+			],
+		];
 	}
 }

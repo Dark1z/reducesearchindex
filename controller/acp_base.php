@@ -3,7 +3,7 @@
  *
  * Reduce Search Index [RSI]. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2020, Dark❶, https://dark1.tech
+ * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -148,7 +148,7 @@ class acp_base
 	protected function success_form_on_submit()
 	{
 		// Add option settings change action to the admin log
-		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_RSI_LOG_SET_SAV', time(), array($this->language->lang('ACP_RSI_' . strtoupper($this->mode))));
+		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_RSI_LOG_SET_SAV', time(), [$this->language->lang('ACP_RSI_' . strtoupper($this->mode))]);
 
 		// Option settings have been updated and logged
 		// Confirm this to the user and provide link back to previous page

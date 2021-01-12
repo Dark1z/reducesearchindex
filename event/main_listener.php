@@ -3,7 +3,7 @@
  *
  * Reduce Search Index [RSI]. An extension for the phpBB Forum Software package.
  *
- * @copyright (c) 2020, Dark❶, https://dark1.tech
+ * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -121,11 +121,11 @@ class main_listener implements EventSubscriberInterface
 
 			if ($forum['dark1_rsi_f_enable'] >= consts::F_ENABLE_TOPIC && $forum['topic_time'] <= $this->config['dark1_rsi_time'])
 			{
-				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = array();
+				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = [];
 			}
 			else if ($forum['dark1_rsi_f_enable'] == consts::F_ENABLE_POST && $forum['post_time'] <= $this->config['dark1_rsi_time'])
 			{
-				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = array();
+				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = [];
 			}
 		}
 
