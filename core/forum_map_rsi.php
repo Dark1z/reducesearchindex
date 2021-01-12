@@ -21,14 +21,17 @@ use dark1\reducesearchindex\core\forum_map;
 class forum_map_rsi extends forum_map
 {
 	/**
-	 * Get forum custom SQL Column.
+	 * Get forum custom SQL Array.
+	 *
+	 * @param array		$sql_ary	Forum SQL Array
 	 *
 	 * @return array
 	 * @access protected
 	 */
-	protected function get_forums_cust_sql_col()
+	protected function get_forums_cust_sql_ary($sql_ary)
 	{
-		return ['dark1_rsi_f_enable'];
+		$sql_ary['SELECT'] .= ', f.dark1_rsi_f_enable';
+		return $sql_ary;
 	}
 
 	/**

@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Reduce Search Index [RSI]",
 	"homepage": "https://phpbb.com/customise/db/extension/reduce_search_index",
-	"version": "1.0.1",
-	"time": "2020-06-30",
+	"version": "1.0.2",
+	"time": "2021-01-21",
 	"keywords": [
 		"phpbb",
 		"extension",
@@ -43,7 +43,7 @@
 		"forum": "https://phpbb.com/customise/db/extension/reduce_search_index/support",
 		"wiki": "https://github.com/dark-1/reducesearchindex/wiki",
 		"source": "https://github.com/dark-1/reducesearchindex",
-		"docs": "https://dark-1.github.io/reducesearchindex",
-		"chat": "https://phpbb.com/community/ucp.php?i=pm&mode=compose&u=1761516"
+		"docs": "https://github.dark1.tech/reducesearchindex",
+		"chat": "https://github.com/dark-1/reducesearchindex/discussions"
 	}
 }
