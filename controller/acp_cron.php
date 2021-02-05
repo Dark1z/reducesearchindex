@@ -27,29 +27,29 @@ use phpbb\cron\manager as cron_manager;
  */
 class acp_cron extends acp_base
 {
-	/** @var \phpbb\config\config */
+	/** @var config */
 	protected $config;
 
-	/** @var \phpbb\cron\manager */
+	/** @var cron_manager */
 	protected $cron_manager;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \phpbb\language\language				$language		Language object
-	 * @param \phpbb\log\log						$log			Log object
-	 * @param \phpbb\request\request				$request		Request object
-	 * @param \phpbb\template\template				$template		Template object
-	 * @param \phpbb\user							$user			User object
-	 * @param \phpbb\config\config					$config			Config object
-	 * @param \phpbb\cron\manager					$cron_manager	Cron manager
+	 * @param language			$language		Language object
+	 * @param log				$log			Log object
+	 * @param request			$request		Request object
+	 * @param template			$template		Template object
+	 * @param user				$user			User object
+	 * @param config			$config			Config object
+	 * @param cron_manager		$cron_manager	Cron manager
 	 */
 	public function __construct(language $language, log $log, request $request, template $template, user $user, config $config, cron_manager $cron_manager)
 	{
 		parent::__construct($language, $log, $request, $template, $user);
 
-		$this->config		= $config;
-		$this->cron_manager	= $cron_manager;
+		$this->config			= $config;
+		$this->cron_manager		= $cron_manager;
 	}
 
 	/**

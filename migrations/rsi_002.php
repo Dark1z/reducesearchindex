@@ -10,11 +10,16 @@
 
 namespace dark1\reducesearchindex\migrations;
 
+/**
+ * @ignore
+ */
 use phpbb\db\migration\migration;
 
+/**
+ * Migration stage 002 : N/A
+ */
 class rsi_002 extends migration
 {
-
 	static public function depends_on()
 	{
 		return ['\dark1\reducesearchindex\migrations\rsi_001_install'];

@@ -27,27 +27,27 @@ use dark1\reducesearchindex\core\forum_map_rsi;
  */
 class acp_forum extends acp_base
 {
-	/** @var \phpbb\db\driver\driver_interface */
+	/** @var db_driver */
 	protected $db;
 
-	/** @var \phpbb\cache\driver\driver_interface */
+	/** @var cache_driver */
 	protected $cache;
 
-	/** @var \dark1\reducesearchindex\core\forum_map_rsi */
+	/** @var forum_map_rsi */
 	protected $forum_map_rsi;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \phpbb\config\config							$config			Config object
-	 * @param \phpbb\language\language						$language		Language object
-	 * @param \phpbb\log\log								$log			Log object
-	 * @param \phpbb\request\request						$request		Request object
-	 * @param \phpbb\template\template						$template		Template object
-	 * @param \phpbb\user									$user			User object
-	 * @param \phpbb\db\driver\driver_interface				$db				Database object
-	 * @param \phpbb\cache\driver\driver_interface			$cache			Cache object
-	 * @param \dark1\reducesearchindex\core\forum_map_rsi	$forum_map_rsi	Forum Map RSI
+	 * @param config			$config			Config object
+	 * @param language			$language		Language object
+	 * @param log				$log			Log object
+	 * @param request			$request		Request object
+	 * @param template			$template		Template object
+	 * @param user				$user			User object
+	 * @param db_driver			$db				Database object
+	 * @param cache_driver		$cache			Cache object
+	 * @param forum_map_rsi		$forum_map_rsi	Forum Map RSI
 	 */
 	public function __construct(language $language, log $log, request $request, template $template, user $user, db_driver $db, cache_driver $cache, forum_map_rsi $forum_map_rsi)
 	{

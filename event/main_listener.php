@@ -27,33 +27,33 @@ use phpbb\language\language;
  */
 class main_listener implements EventSubscriberInterface
 {
-	/** @var \phpbb\config\config */
+	/** @var config */
 	protected $config;
 
-	/** @var \phpbb\db\driver\driver_interface */
+	/** @var db_driver */
 	protected $db;
 
-	/** @var \phpbb\cache\driver\driver_interface */
+	/** @var cache_driver */
 	protected $cache;
 
-	/** @var \phpbb\template\template */
+	/** @var template */
 	protected $template;
 
-	/** @var \phpbb\user */
+	/** @var user */
 	protected $user;
 
-	/** @var \phpbb\language\language */
+	/** @var language */
 	protected $language;
 
 	/**
 	 * Constructor for listener
 	 *
-	 * @param \phpbb\config\config					$config		phpBB config
-	 * @param \phpbb\db\driver\driver_interface		$db			phpBB DBAL object
-	 * @param \phpbb\cache\driver\driver_interface	$cache		phpBB Cache object
-	 * @param \phpbb\template\template				$template	phpBB template
-	 * @param \phpbb\user							$user		phpBB user
-	 * @param \phpbb\language\language				$language	phpBB language object
+	 * @param config		$config		phpBB config
+	 * @param db_driver		$db			phpBB DBAL object
+	 * @param cache_driver	$cache		phpBB Cache object
+	 * @param template		$template	phpBB template
+	 * @param user			$user		phpBB user
+	 * @param language		$language	phpBB language object
 	 * @access public
 	 */
 	public function __construct(config $config, db_driver $db, cache_driver $cache, template $template, user $user, language $language)
@@ -106,7 +106,7 @@ class main_listener implements EventSubscriberInterface
 	/**
 	 * Search Native Index Before
 	 *
-	 * @param \phpbb\event\data $event	Event object
+	 * @param object $event	Event object
 	 * @return null
 	 * @access public
 	 */

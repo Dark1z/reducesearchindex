@@ -29,7 +29,7 @@ abstract class forum_map
 	/** @var string Default Padding Symbol */
 	const PADDING_SYMBOL	= '&nbsp; &#8627; &nbsp;';
 
-	/** @var \phpbb\db\driver\driver_interface */
+	/** @var db_driver */
 	protected $db;
 
 	/** @var int Latest Right ID*/
@@ -56,7 +56,7 @@ abstract class forum_map
 	/**
 	 * Constructor.
 	 *
-	 * @param \phpbb\db\driver\driver_interface		$db		Database object
+	 * @param db_driver		$db		Database object
 	 */
 	public function __construct(db_driver $db)
 	{

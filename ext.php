@@ -20,7 +20,7 @@ use phpbb\extension\base;
  */
 class ext extends base
 {
-	/** string Require phpBB v3.2.3 due to phpBB core events. */
+	/** @var string Require phpBB v3.2.3 due to phpBB core events. */
 	const PHPBB_MIN_3_2_X = '3.2.3';
 
 	/**

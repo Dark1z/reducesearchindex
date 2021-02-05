@@ -16,11 +16,11 @@ namespace dark1\reducesearchindex\cron;
 use phpbb\cron\task\base;
 use dark1\reducesearchindex\core\consts;
 use phpbb\config\config;
-use phpbb\db\driver\driver_interface;
+use phpbb\db\driver\driver_interface as db_driver;
 use phpbb\log\log;
 use phpbb\auth\auth;
 use phpbb\user;
-use phpbb\event\dispatcher;
+use phpbb\event\dispatcher_interface as dispatcher;
 
 /**
  * Reduce Search Index Cron Task.
@@ -28,44 +28,44 @@ use phpbb\event\dispatcher;
 class auto_reduce_sync extends base
 {
 
-	/** @var \phpbb\config\config */
+	/** @var config */
 	protected $config;
 
-	/** @var \phpbb\db\driver\driver_interface */
+	/** @var db_driver */
 	protected $db;
 
-	/** @var \phpbb\log\log */
+	/** @var log */
 	protected $phpbb_log;
 
-	/** @var \phpbb\auth\auth */
+	/** @var auth */
 	protected $auth;
 
-	/** @var \phpbb\user */
+	/** @var user */
 	protected $user;
 
-	/** @var \phpbb\event\dispatcher */
+	/** @var dispatcher */
 	protected $phpbb_dispatcher;
 
 	/** @var string phpBB root path */
 	protected $phpbb_root_path;
 
-	/** @var string phpBB phpEx */
-	protected $phpEx;
+	/** @var string phpBB php ext */
+	protected $php_ext;
 
 	/**
 	* Constructor for cron task
 	*
-	* @param \phpbb\config\config				$config				phpBB config
-	* @param \phpbb\db\driver\driver_interface	$db					phpBB DBAL object
-	* @param \phpbb\log\log						$phpbb_log			phpBB log
-	* @param \phpbb\auth\auth					$auth				phpBB auth
-	* @param \phpbb\user						$user				phpBB user
-	* @param \phpbb\event\dispatcher			$dispatcher			phpBB dispatcher
-	* @param string								$phpbb_root_path	phpBB root path
-	* @param string								$phpEx				phpBB phpEx
+	* @param config			$config				phpBB config
+	* @param db_driver		$db					phpBB DBAL object
+	* @param log			$phpbb_log			phpBB log
+	* @param auth			$auth				phpBB auth
+	* @param user			$user				phpBB user
+	* @param dispatcher		$dispatcher			phpBB dispatcher
+	* @param string			$phpbb_root_path	phpBB root path
+	* @param string			$php_ext			phpBB php ext
 	* @access public
 	*/
-	public function __construct(config $config, driver_interface $db, log $phpbb_log, auth $auth, user $user, dispatcher $phpbb_dispatcher, $phpbb_root_path, $phpEx)
+	public function __construct(config $config, db_driver $db, log $phpbb_log, auth $auth, user $user, dispatcher $phpbb_dispatcher, $phpbb_root_path, $php_ext)
 	{
 		$this->config			= $config;
 		$this->db				= $db;
@@ -74,7 +74,7 @@ class auto_reduce_sync extends base
 		$this->user				= $user;
 		$this->phpbb_dispatcher	= $phpbb_dispatcher;
 		$this->phpbb_root_path	= $phpbb_root_path;
-		$this->phpEx			= $phpEx;
+		$this->php_ext			= $php_ext;
 	}
 
 	/**
@@ -272,7 +272,7 @@ class auto_reduce_sync extends base
 		if ($identifier == 'fulltext_native' && class_exists($search_type))
 		{
 			$error = false;
-			$search = new $search_type($error, $this->phpbb_root_path, $this->phpEx, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
+			$search = new $search_type($error, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
 			if ($error === false)
 			{
 				@$search->index_remove($post_ids, $poster_ids, $forum_ids);
