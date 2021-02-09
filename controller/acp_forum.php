@@ -39,7 +39,6 @@ class acp_forum extends acp_base
 	/**
 	 * Constructor.
 	 *
-	 * @param config			$config			Config object
 	 * @param language			$language		Language object
 	 * @param log				$log			Log object
 	 * @param request			$request		Request object

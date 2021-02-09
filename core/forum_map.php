@@ -6,7 +6,7 @@
  * @author Dark❶, https://dark1.tech
  * @version 1.0.3
  * @source https://github.com/dark-1/phpbbForumMap
- * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
+ * @copyright (c) 2020, Dark❶, https://dark1.tech
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -44,11 +44,11 @@ abstract class forum_map
 	/** @var string Padding Symbol */
 	private $padding_symbol;
 
-	/** @var array Forum Template Row */
-	private $forum_tpl_row;
-
 	/** @var array All Forum Data */
 	private $forums;
+
+	/** @var array Forum Template Row */
+	private $forum_tpl_row;
 
 	/** @var array Store Padding for each Forum */
 	private $padding_store;
@@ -65,9 +65,8 @@ abstract class forum_map
 		$this->padding			= '';
 		$this->padding_spacer	= '';
 		$this->padding_symbol	= '';
-		$this->forum_tpl_row	= [];
 		$this->forums			= [];
-		$this->sql_col			= [];
+		$this->forum_tpl_row	= [];
 		$this->padding_store	= ['0' => ''];
 	}
 

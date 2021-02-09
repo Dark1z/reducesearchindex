@@ -21,6 +21,7 @@ use phpbb\log\log;
 use phpbb\auth\auth;
 use phpbb\user;
 use phpbb\event\dispatcher_interface as dispatcher;
+use phpbb\search\fulltext_native;
 
 /**
  * Reduce Search Index Cron Task.
@@ -267,17 +268,17 @@ class auto_reduce_sync extends base
 	*/
 	private function reduce_search_index($post_ids, $poster_ids, $forum_ids)
 	{
-		$search_type = $this->config['search_type'];
-		$identifier = substr($search_type, strrpos($search_type, '\\') + 1);
-		if ($identifier == 'fulltext_native' && class_exists($search_type))
+		$search = $this->config['search_type'];
+		$name = substr($search, strrpos($search, '\\') + 1);
+		if ($name == 'fulltext_native' && class_exists($search))
 		{
-			$error = false;
-			$search = new $search_type($error, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
+			$error = null;
+			/** @var fulltext_native */
+			$search = new $search($error, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
 			if ($error === false)
 			{
-				@$search->index_remove($post_ids, $poster_ids, $forum_ids);
+				$search->index_remove($post_ids, $poster_ids, $forum_ids);
 			}
 		}
 	}
-
 }
