@@ -1,9 +1,9 @@
 {% if RSI_SEARCH_FLAG %}
 <div class="panel">
 	<div class="inner">
-		<h3>{{ lang('RSI_NOTICE') }} {{ lang('COLON') }}</h3>
+		<h3>{{ lang('RSI_NOTICE') ~ ' ' ~ lang('COLON') }}</h3>
 		{% EVENT dark1_reducesearchindex_search_notice_prepend %}
-		<p>{{ lang('RSI_NOTICE_TEXT') }} {{ lang('COLON') }} <b>“{{ RSI_SEARCH_TIME }}”</b></p>
+		<p>{{ lang('RSI_NOTICE_TEXT') ~ ' ' ~ lang('COLON') }} <b>“{{ RSI_SEARCH_TIME }}”</b></p>
 		{% EVENT dark1_reducesearchindex_search_notice_append %}
 	</div>
 </div>
