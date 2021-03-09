@@ -39,11 +39,11 @@
 	"readme": "./README.md",
 	"support": {
 		"email": "phpbb@dark1.tech",
-		"issues": "https://github.com/dark-1/reducesearchindex/issues",
+		"issues": "https://github.com/Dark1z/reducesearchindex/issues",
 		"forum": "https://phpbb.com/customise/db/extension/reduce_search_index/support",
-		"wiki": "https://github.com/dark-1/reducesearchindex/wiki",
-		"source": "https://github.com/dark-1/reducesearchindex",
+		"wiki": "https://github.com/Dark1z/reducesearchindex/wiki",
+		"source": "https://github.com/Dark1z/reducesearchindex",
 		"docs": "https://github.dark1.tech/reducesearchindex",
-		"chat": "https://github.com/dark-1/reducesearchindex/discussions"
+		"chat": "https://github.com/Dark1z/reducesearchindex/discussions"
 	}
 }

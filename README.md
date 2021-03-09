@@ -4,9 +4,9 @@ This Extension Lets Admin to control **phpBB Native Fulltext** Search Index .  ð
    
    
 #### Status Badge for Reduce Search Index [RSI] on phpBB v3.3.x :   
-![Actions-CI](https://img.shields.io/badge/Actions-CI-8000FF.svg) : [![Actions Status](https://github.com/dark-1/reducesearchindex/workflows/Actions%20CI/badge.svg)](https://github.com/dark-1/reducesearchindex/actions?workflow=Actions%20CI)   
-![Scrutinizer-CI](https://img.shields.io/badge/Scrutinizer-CI-8000FF.svg) : [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/badges/build.png?b=master)](https://scrutinizer-ci.com/g/dark-1/reducesearchindex/build-status/master)   
-![Shields.IO](https://img.shields.io/badge/Shields-IO-8000FF.svg?style=flat-square) : [![GitHub release](https://img.shields.io/github/release/dark-1/reducesearchindex.svg?style=flat-square) ![license](https://img.shields.io/github/license/dark-1/reducesearchindex.svg?style=flat-square)](https://github.com/dark-1/reducesearchindex)   
+![Actions-CI](https://img.shields.io/badge/Actions-CI-8000FF.svg) : [![Actions Status](https://github.com/Dark1z/reducesearchindex/workflows/Actions%20CI/badge.svg)](https://github.com/Dark1z/reducesearchindex/actions?workflow=Actions%20CI)   
+![Scrutinizer-CI](https://img.shields.io/badge/Scrutinizer-CI-8000FF.svg) : [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Dark1z/reducesearchindex/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Dark1z/reducesearchindex/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/Dark1z/reducesearchindex/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Dark1z/reducesearchindex/build-status/master)   
+![Shields.IO](https://img.shields.io/badge/Shields-IO-8000FF.svg?style=flat-square) : [![GitHub release](https://img.shields.io/github/release/Dark1z/reducesearchindex.svg?style=flat-square) ![license](https://img.shields.io/github/license/Dark1z/reducesearchindex.svg?style=flat-square)](https://github.com/Dark1z/reducesearchindex)   
    
    
 ## **Features :**   
@@ -33,7 +33,7 @@ This Extension Lets Admin to control **phpBB Native Fulltext** Search Index .  ð
 4. **Sphinx Fulltext** `fulltext_sphinx` : This can not be Supported because it's fully Sphinx class side implementation & management , which is outside the scope of phpBB.   
    
    
-## For More Detail's & ScreenShot's : [GitHub Page](https://dark-1.github.io/reducesearchindex/)   
+## For More Detail's & ScreenShot's : [GitHub Page](https://Dark1z.github.io/reducesearchindex/)   
    
    
 ## **Installation :**   
@@ -77,9 +77,9 @@ Detailed phpBB standard Uninstallation of Extensions here : [phpBB Extensions Re
    
 ## **Links :**   
    
-**GitHub Repository** : [reducesearchindex](https://github.com/dark-1/reducesearchindex)   
+**GitHub Repository** : [reducesearchindex](https://github.com/Dark1z/reducesearchindex)   
 **phpBB Customisation Database Extension** : [Reduce Search Index](https://www.phpbb.com/customise/db/extension/reduce_search_index)   
-**For more Details Go Here** : [Reduce Search Index [RSI]](https://dark-1.github.io/reducesearchindex)   
+**For more Details Go Here** : [Reduce Search Index [RSI]](https://Dark1z.github.io/reducesearchindex)   
    
 **Credit where credit's due** :   
 Date & Time Picker : **Any+Time** by *Andrew M. Andrews III* at [ama3.com/anytime](https://www.ama3.com/anytime),   
