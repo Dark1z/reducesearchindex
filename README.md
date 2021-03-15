@@ -33,7 +33,7 @@ This Extension Lets Admin to control **phpBB Native Fulltext** Search Index .  ð
 4. **Sphinx Fulltext** `fulltext_sphinx` : This can not be Supported because it's fully Sphinx class side implementation & management , which is outside the scope of phpBB.   
    
    
-## For More Detail's & ScreenShot's : [GitHub Page](https://Dark1z.github.io/reducesearchindex/)   
+## For More Detail's & ScreenShot's : [GitHub Page](https://github.dark1.tech/reducesearchindex/)   
    
    
 ## **Installation :**   
@@ -79,7 +79,7 @@ Detailed phpBB standard Uninstallation of Extensions here : [phpBB Extensions Re
    
 **GitHub Repository** : [reducesearchindex](https://github.com/Dark1z/reducesearchindex)   
 **phpBB Customisation Database Extension** : [Reduce Search Index](https://www.phpbb.com/customise/db/extension/reduce_search_index)   
-**For more Details Go Here** : [Reduce Search Index [RSI]](https://Dark1z.github.io/reducesearchindex)   
+**For more Details Go Here** : [Reduce Search Index [RSI]](https://github.dark1.tech/reducesearchindex)   
    
 **Credit where credit's due** :   
 Date & Time Picker : **Any+Time** by *Andrew M. Andrews III* at [ama3.com/anytime](https://www.ama3.com/anytime),   
