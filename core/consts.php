@@ -34,6 +34,9 @@ class consts
 	 * P : Time Zone [-12:00 - +14:00]
 	 *
 	 * Example : 1970-01-01 12:00:00 AM +00:00
-	*/
-	const TIME_FORMAT		= 'Y-m-d h:i:s A P';
+	**/
+	const TIME_FORMAT	= 'Y-m-d h:i:s A P';
+
+	// RSI Cache Key
+	const CACHE_KEY		= '_dark1_rsi_search_matrix';
 }

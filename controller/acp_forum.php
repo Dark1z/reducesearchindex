@@ -13,6 +13,7 @@ namespace dark1\reducesearchindex\controller;
 /**
  * @ignore
  */
+use dark1\reducesearchindex\core\consts;
 use phpbb\language\language;
 use phpbb\log\log;
 use phpbb\request\request;
@@ -103,12 +104,18 @@ class acp_forum extends acp_base
 	{
 		// Set the options the user configured
 		$forum_enable = $this->request->variable('forum_enable', [0 => 0]);
-		foreach ($forum_enable as $forum_id => $enable)
+		$forum_enable = array_chunk($forum_enable, 50, true);
+		foreach ($forum_enable as $forums_chunk)
 		{
-			$sql = 'UPDATE ' . FORUMS_TABLE . ' SET dark1_rsi_f_enable = ' . (int) $enable . ' WHERE forum_id = ' . (int) $forum_id;
-			$this->db->sql_query($sql);
+			$this->db->sql_transaction('begin');
+			foreach ($forums_chunk as $forum_id => $enable)
+			{
+				$sql = 'UPDATE ' . FORUMS_TABLE . ' SET dark1_rsi_f_enable = ' . (int) $enable . ' WHERE forum_id = ' . (int) $forum_id;
+				$this->db->sql_query($sql);
+			}
+			$this->db->sql_transaction('commit');
 		}
 
-		$this->cache->destroy('_dark1_rsi_search_matrix');
+		$this->cache->destroy(consts::CACHE_KEY);
 	}
 }

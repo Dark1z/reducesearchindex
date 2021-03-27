@@ -143,10 +143,8 @@ class main_listener implements EventSubscriberInterface
 	 */
 	private function get_search_forum($post_id)
 	{
-		$cache_key = '_dark1_rsi_search_matrix';
-
 		// Get search matrix data from the cache
-		$search_matrix = $this->cache->get($cache_key);
+		$search_matrix = $this->cache->get(consts::CACHE_KEY);
 
 		if ($search_matrix === false || !isset($search_matrix[$post_id]))
 		{
@@ -155,16 +153,13 @@ class main_listener implements EventSubscriberInterface
 				'FROM'		=> [
 					POSTS_TABLE		=> 'p',
 				],
-				'LEFT_JOIN' => [
-					[
-						'FROM'	=> [TOPICS_TABLE => 't'],
-						'ON'	=> 't.topic_id = p.topic_id',
-					],
-					[
-						'FROM'	=> [FORUMS_TABLE => 'f'],
-						'ON'	=> 'f.forum_id = p.forum_id',
-					],
-				],
+				'LEFT_JOIN'	=> [[
+					'FROM'	=> [TOPICS_TABLE => 't'],
+					'ON'	=> 't.topic_id = p.topic_id',
+				], [
+					'FROM'	=> [FORUMS_TABLE => 'f'],
+					'ON'	=> 'f.forum_id = p.forum_id',
+				],],
 				'WHERE'	=> 'p.post_id = ' . (int) $post_id,
 			];
 			$sql = $this->db->sql_build_query('SELECT', $sql_ary);
@@ -176,7 +171,7 @@ class main_listener implements EventSubscriberInterface
 			$this->db->sql_freeresult($result);
 
 			// Cache post matrix data
-			$this->cache->put($cache_key, $search_matrix);
+			$this->cache->put(consts::CACHE_KEY, $search_matrix);
 		}
 
 		return $search_matrix[$post_id];
