@@ -117,9 +117,10 @@ class auto_reduce_sync extends base
 			$post_ids = $this->array_unique_sort(array_merge($topic_ary['post_ids'], $post_ary['post_ids']));
 			$poster_ids = $this->array_unique_sort(array_merge($topic_ary['poster_ids'], $post_ary['poster_ids']));
 			$forum_ids = $this->array_unique_sort(array_merge($topic_ary['forum_ids'], $post_ary['forum_ids']));
+			$topic_ids = $this->array_unique_sort($topic_ary['topic_ids']);
 
 			// Lock Topics
-			$this->lock_topics($topic_ary['topic_ids']);
+			$this->lock_topics($topic_ids);
 
 			// Remove the message from the search index
 			$this->reduce_search_index($post_ids, $poster_ids, $forum_ids);
@@ -176,8 +177,10 @@ class auto_reduce_sync extends base
 		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 		$result = $this->db->sql_query($sql);
+		$rows = $this->db->sql_fetchrowset($result);
+		$this->db->sql_freeresult($result);
 
-		while ($row = $this->db->sql_fetchrow($result))
+		foreach ($rows as $row)
 		{
 			$post_ids[] = (int) $row['post_id'];
 			$poster_ids[] = (int) $row['poster_id'];
@@ -188,7 +191,6 @@ class auto_reduce_sync extends base
 				$topic_ids[] = (int) $row['topic_id'];
 			}
 		}
-		$this->db->sql_freeresult($result);
 
 		return [
 			'post_ids' => $post_ids,
@@ -223,14 +225,15 @@ class auto_reduce_sync extends base
 		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 		$result = $this->db->sql_query($sql);
+		$rows = $this->db->sql_fetchrowset($result);
+		$this->db->sql_freeresult($result);
 
-		while ($row = $this->db->sql_fetchrow($result))
+		foreach ($rows as $row)
 		{
 			$post_ids[] = (int) $row['post_id'];
 			$poster_ids[] = (int) $row['poster_id'];
 			$forum_ids[] = (int) $row['forum_id'];
 		}
-		$this->db->sql_freeresult($result);
 
 		return [
 			'post_ids' => $post_ids,
@@ -250,10 +253,14 @@ class auto_reduce_sync extends base
 	{
 		if (count($topic_ids) > 0)
 		{
-			$sql = 'UPDATE ' . TOPICS_TABLE .
-					' SET topic_status = ' . ITEM_LOCKED  .
-					' WHERE ' . $this->db->sql_in_set('topic_id', $topic_ids);
-			$this->db->sql_query($sql);
+			$topic_ids = array_chunk($topic_ids, 50, true);
+			foreach ($topic_ids as $topic_ids_chunk)
+			{
+				$sql = 'UPDATE ' . TOPICS_TABLE .
+						' SET topic_status = ' . ITEM_LOCKED  .
+						' WHERE ' . $this->db->sql_in_set('topic_id', $topic_ids_chunk);
+				$this->db->sql_query($sql);
+			}
 		}
 	}
 
@@ -275,9 +282,15 @@ class auto_reduce_sync extends base
 			$error = null;
 			/** @var fulltext_native */
 			$search = new $search($error, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
-			if ($error === false)
+			if ($error === false && count($post_ids) > 0)
 			{
-				$search->index_remove($post_ids, $poster_ids, $forum_ids);
+				$post_ids = array_chunk($post_ids, 50, true);
+				foreach ($post_ids as $post_ids_chunk)
+				{
+					$this->db->sql_transaction('begin');
+					$search->index_remove($post_ids_chunk, $poster_ids, $forum_ids);
+					$this->db->sql_transaction('commit');
+				}
 			}
 		}
 	}

@@ -164,11 +164,12 @@ class main_listener implements EventSubscriberInterface
 			];
 			$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 			$result = $this->db->sql_query($sql);
-			while ($row = $this->db->sql_fetchrow($result))
+			$rows = $this->db->sql_fetchrowset($result);
+			$this->db->sql_freeresult($result);
+			foreach ($rows as $row)
 			{
 				$search_matrix[$post_id] = $row;
 			}
-			$this->db->sql_freeresult($result);
 
 			// Cache post matrix data
 			$this->cache->put(consts::CACHE_KEY, $search_matrix);
