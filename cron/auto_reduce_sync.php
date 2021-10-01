@@ -85,7 +85,7 @@ class auto_reduce_sync extends base
 	*/
 	public function is_runnable()
 	{
-		return ($this->config['dark1_rsi_auto_reduce_sync_enable']);
+		return (bool) $this->config['dark1_rsi_auto_reduce_sync_enable'];
 	}
 
 	/**
@@ -95,7 +95,7 @@ class auto_reduce_sync extends base
 	*/
 	public function should_run()
 	{
-		return (($this->config['dark1_rsi_auto_reduce_sync_last_gc'] < (time() - $this->config['dark1_rsi_auto_reduce_sync_gc'])));
+		return (bool) ($this->config['dark1_rsi_auto_reduce_sync_last_gc'] < (time() - $this->config['dark1_rsi_auto_reduce_sync_gc']));
 	}
 
 	/**
