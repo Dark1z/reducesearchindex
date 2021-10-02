@@ -70,8 +70,8 @@ $lang = array_merge($lang, [
 	// Cron
 	'ACP_RSI_CRON_ENABLE'			=> 'Enable Auto Reduce Sync',
 	'ACP_RSI_CRON_INTERVAL'			=> 'Auto Reduce Sync Interval',
-	'ACP_RSI_CRON_LAST_RUN'			=> 'Auto Reduce Sync Last Run',
-	'ACP_RSI_CRON_NEXT_RUN'			=> 'Auto Reduce Sync Next Run',
-	'ACP_RSI_CRON_RUN'				=> 'Run Auto Reduce Sync',
+	'ACP_RSI_CRON_LAST_RUN'			=> 'Reduce Sync Last Run',
+	'ACP_RSI_CRON_NEXT_RUN'			=> 'Reduce Sync Next Run',
+	'ACP_RSI_CRON_RUN'				=> 'Run Reduce Sync',
 	'ACP_RSI_CRON_RUN_NOW'			=> 'Run Now',
 ]);
