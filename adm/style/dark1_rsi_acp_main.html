@@ -48,6 +48,27 @@
 				<input type="number" min="1" max="999" size="3" maxlength="3" step="1" name="dark1_rsi_interval" value="{{ RSI_INTERVAL }}" style="width: 50px;" /> {{ lang('ACP_RSI_DAYS') }}
 			</dd>
 		</dl>
+		<dl>
+			<dt>
+				<label for="dark1_rsi_ign_com_enable">{{ lang('ACP_RSI_IGN_COM_ENABLE') ~ lang('COLON') }}</label>
+				<br>
+				<div>{{ lang('ACP_RSI_IGN_COM_ENABLE_EXPLAIN') }}</div>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="dark1_rsi_ign_com_enable" id="dark1_rsi_ign_com_enable" value="1" {% if RSI_IGN_COM_ENABLE %}checked="checked"{% endif %}/> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="dark1_rsi_ign_com_enable" id="dark1_rsi_ign_com_enable" value="0" {% if not RSI_IGN_COM_ENABLE %}checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt>
+				<label for="dark1_rsi_ign_com_words">{{ lang('ACP_RSI_IGN_COM_WORDS') ~ lang('COLON') }}</label>
+				<br>
+				<div>{{ lang('ACP_RSI_IGN_COM_WORDS_EXPLAIN') }}</div>
+			</dt>
+			<dd>
+				<textarea name="dark1_rsi_ign_com_words" id="dark1_rsi_ign_com_words" cols="30" rows="10">{{ RSI_IGN_COM_WORDS }}</textarea>
+			</dd>
+		</dl>
 	</fieldset>
 
 	<fieldset class="submit-buttons">
