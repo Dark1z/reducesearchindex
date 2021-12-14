@@ -48,12 +48,16 @@ $lang = array_merge($lang, [
 	'ACP_RSI_FORMAT'	=> 'In Format',
 
 	// Main
-	'ACP_RSI_ENABLE'				=> 'Reduce Search Index Enable',
-	'ACP_RSI_ENABLE_EXPLAIN'		=> 'Enables the Reduce Search Index.<br>Default : No',
-	'ACP_RSI_TIME'					=> 'Reduce Time',
-	'ACP_RSI_TIME_EXPLAIN'			=> 'The Time from which Search Index is Kept,<br>Also Time before which Search Index is Deleted.<br>Use Date & Time Picker.<br>Default : "1970-01-01 12:00:00 AM +00:00"',
-	'ACP_RSI_INTERVAL'				=> 'Reduce Interval',
-	'ACP_RSI_INTERVAL_EXPLAIN'		=> 'Interval to Update “Reduce Time” when “Auto Reduce Sync” is run.<br>Default : 365 Day(s)',
+	'ACP_RSI_ENABLE'					=> 'Reduce Search Index Enable',
+	'ACP_RSI_ENABLE_EXPLAIN'			=> 'Enables the Reduce Search Index.<br>Default : No',
+	'ACP_RSI_TIME'						=> 'Reduce Time',
+	'ACP_RSI_TIME_EXPLAIN'				=> 'The Time from which Search Index is Kept,<br>Also Time before which Search Index is Deleted.<br>Use Date & Time Picker.<br>Default : "1970-01-01 12:00:00 AM +00:00"',
+	'ACP_RSI_INTERVAL'					=> 'Reduce Interval',
+	'ACP_RSI_INTERVAL_EXPLAIN'			=> 'Interval to Update “Reduce Time” when “Auto Reduce Sync” is run.<br>Default : 365 Day(s)',
+	'ACP_RSI_IGN_COM_ENABLE'			=> 'Ignore Common Words Enable',
+	'ACP_RSI_IGN_COM_ENABLE_EXPLAIN'	=> 'Enables the Ignore Common Words.<br>Default : No',
+	'ACP_RSI_IGN_COM_WORDS'				=> 'Ignore Common Words List',
+	'ACP_RSI_IGN_COM_WORDS_EXPLAIN'		=> 'Enter the Common Words to be Ignored.<br>Each word on new line.',
 
 	// Forum
 	'ACP_RSI_FORUM_EXPLAIN'			=> 'Select the Option to Enable Reduce Search Index for each Forum.<br>Need to select at-least one Forum.<br>Default : <b>Disable</b><br>Following are Options',
@@ -68,10 +72,10 @@ $lang = array_merge($lang, [
 	'ACP_RSI_TABLE_DISABLE'			=> 'Disable',
 
 	// Cron
-	'ACP_RSI_CRON_ENABLE'			=> 'Enable Auto Reduce Sync',
-	'ACP_RSI_CRON_INTERVAL'			=> 'Auto Reduce Sync Interval',
-	'ACP_RSI_CRON_LAST_RUN'			=> 'Reduce Sync Last Run',
-	'ACP_RSI_CRON_NEXT_RUN'			=> 'Reduce Sync Next Run',
-	'ACP_RSI_CRON_RUN'				=> 'Run Reduce Sync',
-	'ACP_RSI_CRON_RUN_NOW'			=> 'Run Now',
+	'ACP_RSI_CRON_ENABLE'		=> 'Enable Auto Reduce Sync',
+	'ACP_RSI_CRON_INTERVAL'		=> 'Auto Reduce Sync Interval',
+	'ACP_RSI_CRON_LAST_RUN'		=> 'Reduce Sync Last Run',
+	'ACP_RSI_CRON_NEXT_RUN'		=> 'Reduce Sync Next Run',
+	'ACP_RSI_CRON_RUN'			=> 'Run Reduce Sync',
+	'ACP_RSI_CRON_RUN_NOW'		=> 'Run Now',
 ]);

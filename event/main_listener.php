@@ -21,6 +21,7 @@ use phpbb\cache\driver\driver_interface as cache_driver;
 use phpbb\template\template;
 use phpbb\user;
 use phpbb\language\language;
+use phpbb\config\db_text as config_text;
 
 /**
  * Reduce Search Index Event listener.
@@ -45,18 +46,22 @@ class main_listener implements EventSubscriberInterface
 	/** @var language */
 	protected $language;
 
+	/** @var config_text */
+	protected $config_text;
+
 	/**
 	 * Constructor for listener
 	 *
-	 * @param config		$config		phpBB config
-	 * @param db_driver		$db			phpBB DBAL object
-	 * @param cache_driver	$cache		phpBB Cache object
-	 * @param template		$template	phpBB template
-	 * @param user			$user		phpBB user
-	 * @param language		$language	phpBB language object
+	 * @param config		$config			phpBB config
+	 * @param db_driver		$db				phpBB DBAL object
+	 * @param cache_driver	$cache			phpBB Cache object
+	 * @param template		$template		phpBB template
+	 * @param user			$user			phpBB user
+	 * @param language		$language		phpBB language object
+	 * @param config_text	$config_text	phpBB config text
 	 * @access public
 	 */
-	public function __construct(config $config, db_driver $db, cache_driver $cache, template $template, user $user, language $language)
+	public function __construct(config $config, db_driver $db, cache_driver $cache, template $template, user $user, language $language, config_text $config_text)
 	{
 		$this->config		= $config;
 		$this->db			= $db;
@@ -64,6 +69,7 @@ class main_listener implements EventSubscriberInterface
 		$this->template		= $template;
 		$this->user			= $user;
 		$this->language		= $language;
+		$this->config_text	= $config_text;
 	}
 
 	/**
@@ -114,6 +120,7 @@ class main_listener implements EventSubscriberInterface
 	{
 		$post_id = $event['post_id'];
 		$words = $event['words'];
+		$cur_words = $event['cur_words'];
 
 		if ($this->config['dark1_rsi_enable'])
 		{
@@ -126,6 +133,10 @@ class main_listener implements EventSubscriberInterface
 			else if ($forum['dark1_rsi_f_enable'] == consts::F_ENABLE_POST && $forum['post_time'] <= $this->config['dark1_rsi_time'])
 			{
 				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = [];
+			}
+			else if ($this->config['dark1_rsi_enable'])
+			{
+				$common_words_ary = explode("\n", $this->config_text->get('dark1_rsi_ign_com_words'));
 			}
 		}
 
