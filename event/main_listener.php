@@ -137,6 +137,10 @@ class main_listener implements EventSubscriberInterface
 			else if ($this->config['dark1_rsi_enable'])
 			{
 				$common_words_ary = explode("\n", $this->config_text->get('dark1_rsi_ign_com_words'));
+				$words['add']['post'] = array_diff($words['add']['post'], $common_words_ary);
+				$words['add']['title'] = array_diff($words['add']['title'], $common_words_ary);
+				$words['del']['post'] = array_unique(array_merge($words['del']['post'], array_intersect(array_keys($cur_words['post']), $common_words_ary)));
+				$words['del']['title'] = array_unique(array_merge($words['del']['title'], array_intersect(array_keys($cur_words['title']), $common_words_ary)));
 			}
 		}
 
