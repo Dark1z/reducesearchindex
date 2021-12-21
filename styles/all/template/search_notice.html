@@ -1,0 +1,9 @@
+{% EVENT dark1_reducesearchindex_search_notice_prepend %}
+<p>{{ lang('RSI_NOTICE_RESTR', RSI_SEARCH_TIME) }}</p>
+{% if RSI_SEARCH_IGN_COM_FLAG and RSI_SEARCH_IGN_COM_WORDS %}
+<details>
+	<summary style="display: list-item;">{{ lang('RSI_NOTICE_IGN_COM') ~ ' ' ~ lang('COLON') }}</summary>
+	<p>{{ RSI_SEARCH_IGN_COM_WORDS }}</p>
+</details>
+{% endif %}
+{% EVENT dark1_reducesearchindex_search_notice_append %}

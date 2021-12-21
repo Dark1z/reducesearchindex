@@ -1,0 +1,10 @@
+{% if RSI_SEARCH_FLAG %}
+<div class="panel">
+	<div class="inner">
+		<details>
+			<summary style="display: list-item;"><b>{{ lang('RSI_NOTICE') ~ ' ' ~ lang('COLON') }}</b></summary>
+			{% include '@dark1_reducesearchindex/search_notice.html' %}
+		</details>
+	</div>
+</div>
+{% endif %}
