@@ -2,9 +2,7 @@
 <div class="panel">
 	<div class="inner">
 		<h3>{{ lang('RSI_NOTICE') ~ ' ' ~ lang('COLON') }}</h3>
-		{% EVENT dark1_reducesearchindex_search_notice_prepend %}
-		<p>{{ lang('RSI_NOTICE_TEXT') ~ ' ' ~ lang('COLON') }} <b>“{{ RSI_SEARCH_TIME }}”</b></p>
-		{% EVENT dark1_reducesearchindex_search_notice_append %}
+		{% include '@dark1_reducesearchindex/search_notice.html' %}
 	</div>
 </div>
 {% endif %}

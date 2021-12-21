@@ -43,5 +43,6 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	// Search Notice
 	'RSI_NOTICE'			=> 'Search Notice',
-	'RSI_NOTICE_TEXT'		=> 'The search results are restricted and only available from',
+	'RSI_NOTICE_RESTR'		=> 'The search results are restricted and only available from <b>“%1$s”</b>.',
+	'RSI_NOTICE_IGN_COM'	=> 'Common Words Ignored are',
 ]);

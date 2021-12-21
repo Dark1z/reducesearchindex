@@ -100,9 +100,12 @@ class main_listener implements EventSubscriberInterface
 		if ($this->config['dark1_rsi_enable'])
 		{
 			$this->language->add_lang('lang_rsi', 'dark1/reducesearchindex');
+			$common_words_ary = $this->get_common_words_ary();
 			$this->template->assign_vars([
-				'RSI_SEARCH_FLAG'		=> $this->config['dark1_rsi_enable'],
-				'RSI_SEARCH_TIME'		=> $this->user->create_datetime()->setTimestamp((int) $this->config['dark1_rsi_time']),
+				'RSI_SEARCH_FLAG'			=> $this->config['dark1_rsi_enable'],
+				'RSI_SEARCH_TIME'			=> $this->user->create_datetime()->setTimestamp((int) $this->config['dark1_rsi_time']),
+				'RSI_SEARCH_IGN_COM_FLAG'	=> $this->config['dark1_rsi_ign_com_enable'],
+				'RSI_SEARCH_IGN_COM_WORDS'	=> implode(', ', $common_words_ary),
 			]);
 		}
 	}
@@ -134,9 +137,9 @@ class main_listener implements EventSubscriberInterface
 			{
 				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = [];
 			}
-			else if ($this->config['dark1_rsi_enable'])
+			else if ($this->config['dark1_rsi_ign_com_enable'])
 			{
-				$common_words_ary = explode("\n", $this->config_text->get('dark1_rsi_ign_com_words'));
+				$common_words_ary = $this->get_common_words_ary();
 				$words['add']['post'] = array_diff($words['add']['post'], $common_words_ary);
 				$words['add']['title'] = array_diff($words['add']['title'], $common_words_ary);
 				$words['del']['post'] = array_unique(array_merge($words['del']['post'], array_intersect(array_keys($cur_words['post']), $common_words_ary)));
@@ -145,6 +148,19 @@ class main_listener implements EventSubscriberInterface
 		}
 
 		$event['words'] = $words;
+	}
+
+
+
+	/**
+	 * Get Common Words array
+	 *
+	 * @return array Common Words
+	 * @access private
+	 */
+	private function get_common_words_ary()
+	{
+		return explode("\n", $this->config_text->get('dark1_rsi_ign_com_words'));
 	}
 
 
