@@ -1,0 +1,19 @@
+/**
+ * Search Notice CSS
+ *
+ * Reduce Search Index [RSI]. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020-2021, Dark❶, https://dark1.tech
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
+
+/* Display as list-item */
+.rsi-summary {
+	display: list-item !important;
+}
+
+/* Display as Inline-Block */
+.rsi-summary > h4 {
+	display: inline-block !important;
+}

@@ -2,7 +2,9 @@
 <div class="panel">
 	<div class="inner">
 		<details>
-			<summary style="display: list-item;"><b>{{ lang('RSI_NOTICE') ~ ' ' ~ lang('COLON') }}</b></summary>
+			<summary class="rsi-summary">
+				<h4>{{ lang('RSI_NOTICE') }}</h4> [<i>{{ lang('RSI_NOTICE_DETAILS') }}</i>] <h4>{{ lang('COLON') }}</h4>
+			</summary>
 			{% include '@dark1_reducesearchindex/search_notice.html' %}
 		</details>
 	</div>
