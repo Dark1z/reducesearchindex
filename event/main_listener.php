@@ -160,7 +160,7 @@ class main_listener implements EventSubscriberInterface
 	 */
 	private function get_common_words_ary()
 	{
-		return explode("\n", $this->config_text->get('dark1_rsi_ign_com_words'));
+		return explode("\n", (string) $this->config_text->get('dark1_rsi_ign_com_words'));
 	}
 
 
