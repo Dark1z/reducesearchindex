@@ -277,20 +277,18 @@ class auto_reduce_sync extends base
 	{
 		$search = $this->config['search_type'];
 		$name = substr($search, strrpos($search, '\\') + 1);
-		if ($name == 'fulltext_native' && class_exists($search))
+
+		if ($name == 'fulltext_native' && class_exists($search) && count($post_ids) > 0)
 		{
-			$error = null;
 			/** @var fulltext_native */
-			$search = new $search($error, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
-			if ($error === false && count($post_ids) > 0)
+			$search = new $search(false, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
+
+			$post_ids = array_chunk($post_ids, 50, true);
+			foreach ($post_ids as $post_ids_chunk)
 			{
-				$post_ids = array_chunk($post_ids, 50, true);
-				foreach ($post_ids as $post_ids_chunk)
-				{
-					$this->db->sql_transaction('begin');
-					$search->index_remove($post_ids_chunk, $poster_ids, $forum_ids);
-					$this->db->sql_transaction('commit');
-				}
+				$this->db->sql_transaction('begin');
+				$search->index_remove($post_ids_chunk, $poster_ids, $forum_ids);
+				$this->db->sql_transaction('commit');
 			}
 		}
 	}
