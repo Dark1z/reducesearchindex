@@ -121,19 +121,12 @@ class main_listener implements EventSubscriberInterface
 	 */
 	public function search_native_index_before($event)
 	{
-		$post_id = $event['post_id'];
 		$words = $event['words'];
 		$cur_words = $event['cur_words'];
 
 		if ($this->config['dark1_rsi_enable'])
 		{
-			$forum = $this->get_search_forum($post_id);
-
-			if ($forum['dark1_rsi_f_enable'] >= consts::F_ENABLE_TOPIC && $forum['topic_time'] <= $this->config['dark1_rsi_time'])
-			{
-				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = [];
-			}
-			else if ($forum['dark1_rsi_f_enable'] == consts::F_ENABLE_POST && $forum['post_time'] <= $this->config['dark1_rsi_time'])
+			if ($this->get_search_forum_enable((int) $event['post_id']))
 			{
 				$words['add']['post'] = $words['add']['title'] = $words['del']['post'] = $words['del']['title'] = [];
 			}
@@ -161,6 +154,24 @@ class main_listener implements EventSubscriberInterface
 	private function get_common_words_ary()
 	{
 		return explode("\n", (string) $this->config_text->get('dark1_rsi_ign_com_words'));
+	}
+
+
+
+	/**
+	 * Get Search Forum Enable or Not
+	 *
+	 * @param int $post_id	Post ID
+	 * @return bool Enabled or Not
+	 * @access private
+	 */
+	private function get_search_forum_enable($post_id)
+	{
+		$forum = $this->get_search_forum($post_id);
+		return (bool) (
+			($forum['dark1_rsi_f_enable'] >= consts::F_ENABLE_TOPIC && $forum['topic_time'] <= $this->config['dark1_rsi_time'])
+			|| ($forum['dark1_rsi_f_enable'] == consts::F_ENABLE_POST && $forum['post_time'] <= $this->config['dark1_rsi_time'])
+		);
 	}
 
 
