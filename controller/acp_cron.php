@@ -80,7 +80,7 @@ class acp_cron extends acp_base
 			$cron_task = $this->cron_manager->find_task('dark1.reducesearchindex.cron.auto_reduce_sync');
 			$cron_task->run();
 
-			$this->success_form_on_submit();
+			$this->success_form_on_submit('ACP_RSI_LOG_CRON', '');
 		}
 
 		// Set output variables for display in the template

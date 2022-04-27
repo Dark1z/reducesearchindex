@@ -281,7 +281,7 @@ class auto_reduce_sync extends base
 		if ($name == 'fulltext_native' && class_exists($search) && count($post_ids) > 0)
 		{
 			/** @var fulltext_native */
-			$search = new $search(false, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
+			$search = new $search($error = false, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
 
 			$post_ids = array_chunk($post_ids, 50, true);
 			foreach ($post_ids as $post_ids_chunk)

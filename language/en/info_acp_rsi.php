@@ -45,6 +45,7 @@ $lang = array_merge($lang, [
 
 	// phpBB Log
 	'ACP_RSI_LOG_SET_SAV'	=> '<strong>Reduce Search Index [RSI]</strong><br>» %s saved successfully!',
+	'ACP_RSI_LOG_CRON'		=> '<strong>Reduce Search Index [RSI]</strong><br>» Cron ran successfully!%s',
 	'RSI_AUTO_LOG'			=> '<strong>Reduce Search Index [RSI]</strong><br>» Auto Reduce Updater completed.<br>» Search Restricted for Last “%1$s” Day(s) from “%2$s”',
 
 	// ACP Modes
