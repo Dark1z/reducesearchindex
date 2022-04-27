@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Reduce Search Index [RSI]",
 	"homepage": "https://phpbb.com/customise/db/extension/reduce_search_index",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"time": "2022-01-23",
 	"keywords": [
 		"phpbb",
