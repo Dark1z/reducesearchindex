@@ -69,7 +69,7 @@ class acp_main extends acp_base
 			$this->config->set('dark1_rsi_enable', $this->request->variable('dark1_rsi_enable', 0));
 			$this->config->set('dark1_rsi_ign_com_enable', $this->request->variable('dark1_rsi_ign_com_enable', 0));
 			$this->config->set('dark1_rsi_time', strtotime($this->request->variable('dark1_rsi_time', '0', true)));
-			$this->config->set('dark1_rsi_interval', $this->request->variable('dark1_rsi_interval', 0) * 86400);
+			$this->config->set('dark1_rsi_interval', $this->request->variable('dark1_rsi_interval', 0) * consts::DAY_IN_SEC);
 
 			$unq_com_words = explode("\n", $this->request->variable('dark1_rsi_ign_com_words', '', true));
 			$unq_com_words = array_unique(array_map('strtolower', $unq_com_words));
@@ -83,7 +83,7 @@ class acp_main extends acp_base
 		$this->template->assign_vars([
 			'RSI_ENABLE'			=> $this->config['dark1_rsi_enable'],
 			'RSI_IGN_COM_ENABLE'	=> $this->config['dark1_rsi_ign_com_enable'],
-			'RSI_INTERVAL'			=> $this->config['dark1_rsi_interval'] / 86400,
+			'RSI_INTERVAL'			=> $this->config['dark1_rsi_interval'] / consts::DAY_IN_SEC,
 			'RSI_TIME'				=> $this->user->format_date($this->config['dark1_rsi_time'], consts::TIME_FORMAT, true),
 			'RSI_CURR_TIME'			=> $this->user->format_date(time(), consts::TIME_FORMAT, true),
 			'RSI_IGN_COM_WORDS'		=> $this->config_text->get('dark1_rsi_ign_com_words'),
