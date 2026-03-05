@@ -39,4 +39,7 @@ class consts
 
 	// RSI Cache Key
 	const CACHE_KEY		= '_dark1_rsi_search_matrix';
+
+	// RSI Day in Seconds (1 day * 24 hours * 60 minutes * 60 seconds)
+	const DAY_IN_SEC	= 86400;
 }

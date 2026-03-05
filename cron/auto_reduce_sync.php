@@ -125,7 +125,7 @@ class auto_reduce_sync extends base
 			// Remove the message from the search index
 			$this->reduce_search_index($post_ids, $poster_ids, $forum_ids);
 
-			$dark1_rsi_interval = $this->config['dark1_rsi_interval'] / 86400;
+			$dark1_rsi_interval = $this->config['dark1_rsi_interval'] / consts::DAY_IN_SEC;
 			$dark1_rsi_time = date(consts::TIME_FORMAT, (int) $this->config['dark1_rsi_time']);
 			$this->phpbb_log->add('admin', ANONYMOUS, '127.0.0.1', 'RSI_AUTO_LOG', time(), [$dark1_rsi_interval, $dark1_rsi_time]);
 		}
@@ -280,15 +280,21 @@ class auto_reduce_sync extends base
 
 		if ($name == 'fulltext_native' && class_exists($search) && count($post_ids) > 0)
 		{
-			/** @var fulltext_native */
-			$search = new $search($error = false, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
+			/** @var bool|string */
+			$error = false;
 
-			$post_ids = array_chunk($post_ids, 50, true);
-			foreach ($post_ids as $post_ids_chunk)
+			/** @var fulltext_native */
+			$search = new $search($error, $this->phpbb_root_path, $this->php_ext, $this->auth, $this->config, $this->db, $this->user, $this->phpbb_dispatcher);
+
+			if (!$error)
 			{
-				$this->db->sql_transaction('begin');
-				$search->index_remove($post_ids_chunk, $poster_ids, $forum_ids);
-				$this->db->sql_transaction('commit');
+				$post_ids = array_chunk($post_ids, 50, true);
+				foreach ($post_ids as $post_ids_chunk)
+				{
+					$this->db->sql_transaction('begin');
+					$search->index_remove($post_ids_chunk, $poster_ids, $forum_ids);
+					$this->db->sql_transaction('commit');
+				}
 			}
 		}
 	}
