@@ -16,8 +16,8 @@
 	"authors": [
 		{
 			"name": "Dark❶",
-			"email": "phpbb@dark1.tech",
-			"homepage": "https://dark1.tech",
+			"email": "dark1z@yahoo.com",
+			"homepage": "https://dark1.rf.gd/",
 			"role": "Lead Developer"
 		}
 	],
@@ -38,12 +38,12 @@
 	},
 	"readme": "./README.md",
 	"support": {
-		"email": "phpbb@dark1.tech",
+		"email": "dark1z@yahoo.com",
 		"issues": "https://github.com/Dark1z/reducesearchindex/issues",
 		"forum": "https://phpbb.com/customise/db/extension/reduce_search_index/support",
 		"wiki": "https://github.com/Dark1z/reducesearchindex/wiki",
 		"source": "https://github.com/Dark1z/reducesearchindex",
-		"docs": "https://github.dark1.tech/reducesearchindex",
+		"docs": "https://dark1z.github.io/reducesearchindex",
 		"chat": "https://github.com/Dark1z/reducesearchindex/discussions"
 	}
 }
