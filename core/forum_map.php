@@ -3,10 +3,10 @@
  *
  * phpBB Forum Mapper. A helper class for the phpBB Forum Software package.
  *
- * @author Dark❶, https://dark1.tech
- * @version 1.0.3
+ * @author Dark❶
+ * @version 1.0.4
  * @source https://github.com/Dark1z/phpbbForumMap
- * @copyright (c) 2020-forever, Dark❶, https://dark1.tech
+ * @copyright (c) 2020-forever, Dark❶
  * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
@@ -200,17 +200,6 @@ abstract class forum_map
 	 * @access protected
 	 */
 	abstract protected function get_forums_cust_sql_ary($sql_ary);
-	/** @example :
-	{
-		// For one forum table column
-		$sql_ary['SELECT'] .= ', f.vendor_ext_enable';
-		// OR
-		// For two or more forum table columns
-		$sql_ary['SELECT'] .= ', f.vendor_ext_enable, f.vendor_ext_value';
-
-		return $sql_ary;
-	}
-	*/
 
 	/**
 	 * Get forum custom template row.
@@ -221,19 +210,4 @@ abstract class forum_map
 	 * @access protected
 	 */
 	abstract protected function get_forum_cust_tpl_row($row);
-	/** @example :
-	{
-		$tpl_row = [];
-		if ($row['forum_type'] == FORUM_POST)
-		{
-			// Array to be joined with original $tpl_row
-			$tpl_row = [
-				'ENABLE'	=> $row['vendor_ext_enable'],
-				// If more than one
-				'VALUE'		=> $row['vendor_ext_value'],
-			];
-		}
-		return $tpl_row;
-	}
-	*/
 }
